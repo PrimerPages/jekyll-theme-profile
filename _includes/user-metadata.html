@@ -7,7 +7,9 @@
     {% endif %}
     {%- if user.name %}
     <div class="mb-3">
-        {% octicon mark-github height:20 class:"mr-2 v-align-middle" aria-label:GitHub %}
+        <div class="mr-2 v-align-middle" aria-label="GitHub">
+        {% include icon.html name="mark-github" height="24" %}
+        </div>
         <a href="https://github.com/{{ user.login }}">
             @{{ user.login }}
         </a>
@@ -15,7 +17,9 @@
     {%- endif %}
     {%- if user.email %}
     <div class="mb-3">
-        {% octicon mail height:20 class:"mr-2 v-align-middle" aria-label:email %}
+        <div class="mr-2 v-align-middle" aria-label:email>
+        {% include icon.html name="mail" height="24" %}
+        </div>
         <a href="mailto:{{ user.email }}">
             {{ user.email }}
         </a>
@@ -23,7 +27,9 @@
     {%- endif %}
     {%- if user.location %}
     <div class="mb-3">
-        {% octicon location height:20 class:"mr-2 v-align-middle" aria-label:Location %}
+        <div class="mr-2 v-align-middle" aria-label:Location>
+        {% include icon.html name="location" height="24" %}
+        </div>
         {{ user.location }}
     </div>
     {%- endif %}
