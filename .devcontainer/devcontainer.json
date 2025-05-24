@@ -3,7 +3,7 @@
 {
 	"name": "Jekyll",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/jekyll:3.3-bullseye",
+	"image": "mcr.microsoft.com/devcontainers/ruby:3.3",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -15,22 +15,8 @@
 		// Live reload server
 		35729
 	],
-
-	// Mount local aliases if any
-	"mounts": [
-		"source=/${env:HOME}/.bash_aliases,target=/home/vscode/.bash_aliases,type=bind,consistency=cached",
-		"source=/${env:HOME}/.aliases,target=/home/vscode/.aliases,type=bind,consistency=cached"
-	],
 	// Uncomment the next line to run commands after the container is created.
-	"onCreateCommand": ".devcontainer/post-create.sh",
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"eamodio.gitlens",
-				"Shopify.ruby-lsp"
-			]
-		}
-	}
+	"postCreateCommand": ".devcontainer/post-create.sh"
 
 	// Configure tool-specific properties.
 	// "customizations": {},

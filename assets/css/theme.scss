@@ -1,9 +1,9 @@
 ---
 ---
-{% if site.github.versions != blank %}
-@import 'jekyll-theme-profile-compat';
-{% else %}
+{% if site.jekyll_version and site.jekyll_version > 3 %}
 @use 'jekyll-theme-profile';
+{% else %}
+@import 'jekyll-theme-profile-compat';
 {% endif %}
 
 :root{

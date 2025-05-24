@@ -1,0 +1,5 @@
+{%- assign icon = include.name | downcase -%}
+{%- assign icon_size = include.height | default:16 %}
+{%- assign icon_class = "octicon octicon-" | append: icon | append: "-" | append: icon_size -%}
+
+<span class="{{icon_class}}"></span>
