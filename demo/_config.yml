@@ -3,7 +3,7 @@ theme: jekyll-theme-profile
 title: Jekyll Theme Profile
 description: Theme built with jekyll-theme-profile
 image: /assets/img/social-preview.png
-repository: athackst/jekyll-theme-profile
+repository: "PrimerPages/jekyll-theme-profile"
 
 collections:
   docs:
@@ -26,7 +26,7 @@ defaults:
       image: /assets/img/default.png # The default image used for social and posts.
       index: /docs/index.html
       permalink: /docs/:path:output_ext
-      edit_url: "https://github.com/athackst/jekyll-theme-profile/edit/main/demo"
+      edit_url: "https://github.com/PrimerPages/jekyll-theme-profile/edit/main/demo"
       toc: true
 
 # ########### Theme settings ###############
@@ -156,6 +156,7 @@ plugins:
   - jekyll-seo-tag
   - jekyll-toc
   - jemoji
+  - jekyll-meta
 ####################
 # jekyll-paginate settings
 paginate: 7 # The number of posts to show per page of pagination of blog posts
