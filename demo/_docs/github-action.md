@@ -2,7 +2,7 @@
 title: "Using with a GitHub action"
 order: 100
 category: Advanced
-image: "https://raw.githubusercontent.com/athackst/jekyll-theme-profile/main/screenshot.png"
+image: "https://raw.githubusercontent.com/PrimerPages/jekyll-theme-profile/main/screenshot.png"
 ---
 
 You can also use this with GitHub actions. Below is a typical workflow file
