@@ -1,6 +1,6 @@
 ---
 ---
-{% if site.jekyll_version and site.jekyll_version > 3 %}
+{% if site.meta.jekyll_major_version > 3 %}
 @use 'jekyll-theme-profile';
 {% else %}
 @import 'jekyll-theme-profile-compat';

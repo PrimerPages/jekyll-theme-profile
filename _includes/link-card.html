@@ -13,12 +13,25 @@ This builds a link card
 
 {%- assign link = include.link %}
 
+{%- if link.thumbail %}
+{%- capture thumbnail %}
+<img src="{{ thumbnail | relative_url }}" width="48" height="48"
+class="rounded-2 box-shadow-none img-cover float-left" alt="{{ name }}">
+{%- endcapture %}
+{%- elsif link.octicon %}
+{%- capture thumbnail %}
+<div class="ml-2 h1">
+<span class="octicon octicon-{{link.octicon}}-16"></span>
+</div>
+{%- endcapture %}
+{%- endif %}
+
 {%- if link.url %}
 <a href="{{ link.url | relative_url }}"
   class="Link Link-btn d-flex flex-justify-between flex-items-center hover-grow no-underline border rounded-3 p-2"
   {% if link.url contains "http" %}target="_blank" rel="noopener noreferrer"{% endif %}>
     <div class="avatar-7">
-      {% include thumbnail.html thumbnail=link.thumbnail octicon = link.octicon %}
+      {{ thumbnail }}
     </div>
     <div class="p-2 flex-1">
       <p class="f3 text-center mb-0">{{ link.name }}</p>
@@ -28,7 +41,7 @@ This builds a link card
 <div class="Link-text github-component position-relative height-full d-flex flex-column text-center p-1">
   <div class="d-inline-flex flex-items-center">
     <div class="avatar-7">
-      {% include thumbnail.html thumbnail=link.thumbnail octicon = link.octicon %}
+      {{ thumbnail }}
     </div>
     <div class="p-2 flex-1">
     <p class="f3 lh-condensed text-center mt-1">{{ link.name }}</p>
