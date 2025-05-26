@@ -109,13 +109,14 @@ layout: default
                     </div>
                     <div class="col-12 col-md-4 col-lg-3 markdown-body">
                         <div class="d-none d-md-block position-sticky top-12">
-                            {%- if page.toc %}
+                            {% capture page_toc %}{{ content | toc_only }}{% endcapture %}
+                            {% if page.toc and page_toc != content %}
                             <div class="mb-8 table-of-contents ">
                                 <h2 class="h6-mktg pt-1">
                                     Table of Contents
                                 </h2>
                                 <div id="table-of-contents">
-                                    {% toc %}
+                                    {{ page_toc }}
                                 </div>
                             </div>
                             {%- endif %}
