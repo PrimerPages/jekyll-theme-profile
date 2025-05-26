@@ -3,9 +3,10 @@ title: Tags
 layout: page
 ---
 {%- assign tags = page.tags | default: site.tags %}
-{%- assign tag_permalink = page.tag_path | default:site.tag_path | default: 'tags' | append: '/:tag' %}
+{%- assign tag_path = page.tag_path | default: site.tag_page_dir %}
+{%- if tag_path %}{%- assign tag_permalink = tag_path | append: '/:tag' %}{% endif %}
 {%- assign tag_permalink = page.pagination.permalink | default: site.autopages.tags.permalink | default: tag_permalink %}
-{%- assign per_section = page.per_section | default: 3 %}
+{%- assign per_section = page.per_section | default: page.pagination.per_page %}
 
 {% include post-index.html
   collection=tags
