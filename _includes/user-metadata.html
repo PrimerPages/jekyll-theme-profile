@@ -6,9 +6,9 @@
     </p>
     {% endif %}
     {%- if user.name %}
-    <div class="mb-3">
-        <div class="mr-2 v-align-middle" aria-label="GitHub">
-            <span class="octicon octicon-mark-github-24"></span>
+    <div class="mb-3 d-inline-flex flex-items-baseline">
+        <div class="h2 mr-2 v-align-middle">
+        <span class="octicon octicon-mark-github-24"></span>
         </div>
         <a href="https://github.com/{{ user.login }}">
             @{{ user.login }}
@@ -16,7 +16,7 @@
     </div>
     {%- endif %}
     {%- if user.email %}
-    <div class="mb-3">
+    <div class="mb-3 d-inline-flex flex-items-baseline">
         <div class="mr-2 v-align-middle" aria-label:email>
             <span class="octicon octicon-mail-24"></span>
         </div>
@@ -26,7 +26,7 @@
     </div>
     {%- endif %}
     {%- if user.location %}
-    <div class="mb-3">
+    <div class="mb-3 d-inline-flex flex-items-baseline">
         <div class="mr-2 v-align-middle" aria-label:Location>
             <span class="octicon octicon-location-24"></span>
         </div>
