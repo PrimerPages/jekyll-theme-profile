@@ -1,15 +1,15 @@
 {%- assign collection = include.collection %}
-{%- assign collection_permalink = include.collection_permalink | default: ':name' %}
-{%- assign replace_value = include.replace_value | default: ':name' %}
-{%- assign per_section = include.per_section | default: 3 %}
+{%- assign collection_permalink = include.collection_permalink %}
+{%- assign replace_value = include.replace_value %}
 
 {%- for section in collection %}
 {%- assign section_name = section | first %}
 {%- assign section_slug = section_name | slugify %}
 {%- assign section_posts = section | last %}
+{%- assign per_section = include.per_section | default: section_posts.size %}
 <div class="section-heading d-flex flex-items-center flex-justify-between mb-4 mb-lg-7">
   <h2 class="h6-mktg border-bottom-0">{{ section_name | capitalize }}</h2>
-  {%- if section_posts.size > per_section %}
+  {%- if section_posts.size > per_section and collection_permalink and replace_value %}
   <div class="d-none d-lg-flex flex-items-center">
     <a href="{{ collection_permalink | replace: replace_value, section_slug | relative_url }}"
       class="Link--primary arrow-target-mktg text-semibold">View all 

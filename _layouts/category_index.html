@@ -3,9 +3,10 @@ layout: page
 title: Category
 ---
 {%- assign categories = page.categories | default: site.categories %}
-{%- assign category_permalink = site.category_path | default: 'category' | append: '/:cat' %}
+{%- assign category_path = page.category_path | default: site.category_path %}
+{% if category_path %}{%- assign category_permalink = category_path | append: '/:cat' %}{% endif %}
 {%- assign category_permalink = page.pagination.permalink | default: site.autopages.categories.permalink | default: category_permalink %}
-{%- assign per_section = page.per_section | default: page.pagination.per_page | default: 3 %}
+{%- assign per_section = page.per_section | default: page.pagination.per_page %}
 
 {% include post-gallery.html
     collection=categories
