@@ -3,7 +3,7 @@
     <a href="{{ site.github.repository_url }}" class="{{ include.class }} tooltipped tooltipped-s" aria-label="Go to repository">
         <div class="d-flex flex-row flex-justify-center Header-item">
 
-            <div class="mr-2 h2">{% include icon.html name="git-branch" height="24" %}</div>
+            <div class="mr-2 h2"><span class="octicon octicon-git-branch-24"></span></div>
             <div>
                 <div>
                     {{ site.repository }}
@@ -11,12 +11,12 @@
                 <div class="d-flex flex-row">
                     {%- if site.github.latest_release %}
                     <div class="mr-3">
-                        <span>{% include icon.html name="tag" height="16" %} {{ site.github.latest_release.tag_name}}</span>
+                        <span><span class="octicon octicon-tag-16"></span> {{ site.github.latest_release.tag_name}}</span>
                     </div>
                     {%- endif %}
                     {% if repo %}
-                    <div class="mr-3"><span>{% include icon.html name="star" height="16" %} {{ repo.stargazers_count }}</div>
-                    <div class="mr-0"><span>{% include icon.html name="repo-forked" height="16" %} {{ repo.forks_count }}</span></div>
+                    <div class="mr-3"><span><span class="octicon octicon-star-16"></span> {{ repo.stargazers_count }}</div>
+                    <div class="mr-0"><span><span class="octicon octicon-repo-forked-16"></span> {{ repo.forks_count }}</span></div>
                     {% endif %}
                 </div>
             </div>
