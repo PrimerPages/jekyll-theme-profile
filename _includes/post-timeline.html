@@ -1,21 +1,18 @@
 {%- comment -%}
-  post-timeline.html
-  Usage example:
-    {% include post-timeline.html collection=site.posts limit=5 index='/blog/index.html' %}
+post-timeline.html
+Usage example:
+{% include post-timeline.html collection=site.posts limit=5 index='/blog/index.html' %}
 
-  Expects:
-    collection (array, required) - A list of posts or other objects to display.
-    limit (integer, optional) - Number of posts to display (default: all).
-    index (string, optional) - Index page for the collection.
+Expects:
+collection (array, required) - A list of posts or other objects to display.
+limit (integer, optional) - Number of posts to display (default: all).
+index (string, optional) - Index page for the collection.
 {%- endcomment -%}
 
 {%- assign timeline_collection = include.collection | sort: "date" | reverse %}
 {%- assign timeline_post_limit = include.limit | default: -1 %}
-{%- if timeline_post_limit < 0 %}
-{%- assign timeline_post_limit = collection.size %}
-{%- endif %}
-{% assign timeline_index = include.index %}
-
+{%- if timeline_post_limit < 0 %}{%- assign timeline_post_limit=collection.size %}{%- endif %}
+{% assign timeline_index=include.index %}
 <div class="container-xl mx-auto p-responsive-blog mb-8">
   {%- for post in timeline_collection | limit: timeline_post_limit %}
   {%- include post-timeline-card.html post=post %}
@@ -25,9 +22,10 @@
     <div class="d-flex gutter-spacious">
       <div class="col-12 col-md-7 offset-md-5">
         <a href="{{ timeline_index | relative_url }}"
-          class="Link--primary arrow-target-mktg text-semibold btn ml-5">View all {% include icon.html name="chevron-right" height="16" %}</a>
+          class="Link--primary arrow-target-mktg text-semibold btn ml-5">View all <span
+            class="octicon octicon-chevron-right-16 mb-1"></span></a>
       </div>
     </div>
   </div>
   {%- endif %}
-</div>
+  </div>

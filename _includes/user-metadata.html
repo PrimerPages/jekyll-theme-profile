@@ -8,7 +8,7 @@
     {%- if user.name %}
     <div class="mb-3">
         <div class="mr-2 v-align-middle" aria-label="GitHub">
-        {% include icon.html name="mark-github" height="24" %}
+            <span class="octicon octicon-mark-github-24"></span>
         </div>
         <a href="https://github.com/{{ user.login }}">
             @{{ user.login }}
@@ -18,7 +18,7 @@
     {%- if user.email %}
     <div class="mb-3">
         <div class="mr-2 v-align-middle" aria-label:email>
-        {% include icon.html name="mail" height="24" %}
+            <span class="octicon octicon-mail-24"></span>
         </div>
         <a href="mailto:{{ user.email }}">
             {{ user.email }}
@@ -28,7 +28,7 @@
     {%- if user.location %}
     <div class="mb-3">
         <div class="mr-2 v-align-middle" aria-label:Location>
-        {% include icon.html name="location" height="24" %}
+            <span class="octicon octicon-location-24"></span>
         </div>
         {{ user.location }}
     </div>

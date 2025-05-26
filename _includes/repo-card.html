@@ -3,7 +3,7 @@
   <div>
     <div class="d-flex flex-justify-between flex-items-start mb-1">
       <h1 class="f4 lh-condensed my-1">
-          {% include icon.html name="repo" height="24" %}
+        <span class="octicon octicon-repo-24"></span>
         <a href="{{repository.html_url}}">{{ repository.name }}</a>
       </h1>
     </div>
@@ -11,7 +11,7 @@
     {%- if repository.homepage != blank %}
     <div class="mb-2 d-flex flex-items-center Link--secondary">
       <div class="mr-2">
-        {% include icon.html name="link" height="16" %}
+        <span class="octicon octicon-link-16"></span>
       </div>
       <span class="flex-auto min-width-0 css-truncate css-truncate-target width-fit">
         <a title="{{ repository.homepage }}" role="link" target="_blank" class="text-bold"
@@ -30,12 +30,12 @@
       {%- endif %}
       {%- if repository.stargazers_count %}
       <a href="{{ repository.html_url }}/stargazers" class="mr-1 Link--muted">
-        {% include icon.html name="star" height="16" %} {{ repository.stargazers_count }}
+        <span class="octicon octicon-star-16"></span> {{ repository.stargazers_count }}
       </a>
       {%- endif %}
       {%- if repository.forks_count %}
       <a href="{{ repository.html_url }}/network/members" class="mr-1 Link--muted">
-        {% include icon.html name="repo-forked" height="16" %} {{ repository.forks_count }}
+        <span class="octicon octicon-repo-forked-16"></span> {{ repository.forks_count }}
       </a>
       {%- endif %}
     </p>

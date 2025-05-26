@@ -11,10 +11,12 @@
   <h2 class="h6-mktg border-bottom-0">{{ section_name | capitalize }}</h2>
   {%- if section_posts.size > per_section %}
   <div class="d-none d-lg-flex flex-items-center">
-    <a href="{{ collection_permalink  | replace: replace_value, section_slug | relative_url }}" class="Link--primary arrow-target-mktg text-semibold">View all {% include icon.html name="chevron-right" height=16 %}</a>
+    <a href="{{ collection_permalink  | replace: replace_value, section_slug | relative_url }}"
+      class="Link--primary arrow-target-mktg text-semibold">View all
+      <span class="octicon octicon-chevron-right-16"></span></a>
   </div>
   {%- endif %}
-  </div>
+</div>
 <div class="d-flex flex-wrap gutter-spacious mb-4">
   {% for post in section_posts limit: per_section %}
   {%- include post-card.html %}
@@ -22,7 +24,9 @@
 </div>
 {%- if section_posts.size > per_section %}
 <div class="mb-7 mb-md-8 pt-5 text-right d-lg-none border-top">
-  <a href="{{ collection_permalink | replace: replace_value, section_slug | relative_url }}" class="Link--primary arrow-target-mktg text-semibold">View all {% include icon.html name="chevron-right" height=16 %}</a>
+  <a href="{{ collection_permalink | replace: replace_value, section_slug | relative_url }}"
+    class="Link--primary arrow-target-mktg text-semibold">View all
+    <span class="octicon octicon-chevron-right-16"></span></a>
 </div>
 {%- endif %}
 {% endfor %}
