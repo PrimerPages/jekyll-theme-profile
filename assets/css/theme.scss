@@ -1,9 +1,12 @@
 ---
 ---
-{% if site.meta.jekyll_major_version > 3 %}
-@use 'jekyll-theme-profile';
-{% else %}
+{% assign jekyll_version=jekyll.version | split: "." | first %}
+{% if jekyll_version == '3' %}
+/* Jekyll version 3 detected */
 @import 'jekyll-theme-profile-compat';
+{% else %}
+/* Jekyll version 4+ detected */
+@use 'jekyll-theme-profile';
 {% endif %}
 
 :root{
