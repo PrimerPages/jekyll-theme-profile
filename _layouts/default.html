@@ -19,6 +19,9 @@
     {%- elsif style == 'sidebar' %}
     <div class="d-lg-flex flex-1">
     {% include header-sidebar.html %}
+    {% else %} {% comment %}<!-- Default to appbar -->{% endcomment %}
+    {% include header-appbar.html %}
+    <div class="d-flex flex-1 flex-column">
     {%- endif %}
     {{ content }}
     </div>
