@@ -2,23 +2,28 @@
 title: Documentation
 order: 0
 toc: false
+layout: page
 ---
 {% assign default_category = "Other" %}
 {% assign docs_without_current = site.docs | where_exp: "item", "item.url != page.url" %}
-<ul>
-  {% assign doc_categories = docs_without_current | group_by: "category" %}
+{% assign doc_categories = docs_without_current | group_by: "category" %}
+
+<div class="d-flex flex-wrap gutter">
   {% for category in doc_categories %}
   {% assign category_name = category.name | default: default_category %}
-  <li>{{ category_name | capitalize }}
-    <ul>
-      {% for doc in category.items %}
-      {% unless doc.url == page.url %}
-      <li>
-        <a href="{{ doc.url | relative_url }}">{{ doc.title }}</a>
-      </li>
-      {% endunless %}
-      {% endfor %}
-    </ul>
-  </li>
+  <div class="d-flex flex-column col-12 col-sm-6 col-lg-4 col-xl-3 pb-4">
+    <h3 class="h3">{{ category_name | capitalize }}</h3>
+    <div class="pt-2 mb-4 text-normal">
+      <ul class="list-style-none pl-0">
+        {% for doc in category.items %}
+        {% unless doc.url == page.url %}
+        <li>
+          <a class="pt-2" href="{{ doc.url | relative_url }}">{{ doc.title }}</a>
+        </li>
+        {% endunless %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
   {% endfor %}
-</ul>
+</div>

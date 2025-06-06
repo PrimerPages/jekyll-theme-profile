@@ -22,6 +22,7 @@ defaults:
       path: "" # an empty string here means all files in the project
       type: "docs"
     values:
+      categories: ["Documentation"]
       layout: "docs"
       image: /assets/img/default.png # The default image used for social and posts.
       index: /docs/index.html
