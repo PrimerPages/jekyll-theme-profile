@@ -17,7 +17,7 @@ index (string, optional) - Index page for the collection.
   {%- for post in timeline_collection | limit: timeline_post_limit %}
   {%- include post-timeline-card.html post=post %}
   {%- endfor %}
-  {%- if timeline_collection.size > timeline_post_limit and timeline_index %}
+  {%- if timeline_collection.size > timeline_post_limit and timeline_index != blank %}
   <div class="mx-auto py-3">
     <a href="{{ timeline_index | relative_url }}"
       class="Link--primary arrow-target-mktg text-semibold btn width-full text-center">More</a>
