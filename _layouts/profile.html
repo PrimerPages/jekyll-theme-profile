@@ -8,41 +8,41 @@ layout: page
 {%- assign links = page.links | default: site.links | default: nill %}
 {%- assign collection = page.collection | default: site.posts %}
 {%- assign posts_limit = page.posts_limit | default: site.posts_limit | default: site.paginate %}
-{% assign paginate_path = page.pagination.permalink | default: site.pagination.permalink | default: site.paginate_path %}
+{% assign paginate_path = page.pagination.permalink | default: site.pagination.permalink | default: site.paginate_path
+%}
 {% assign paginate_first_page_path = paginate_path | replace: 'page:num', '' %}
-{% assign first_page_path = page.first_page_path | default: paginator.first_page_path | default: paginate_first_page_path %}
+{% assign first_page_path = page.first_page_path | default: paginator.first_page_path | default:
+paginate_first_page_path %}
 
-<div class="Profile d-lg-flex flex-justify-center gutter">
-    {%- if style != "sidebar" and style != "stacked" %}
-    <div class="col-lg-4 border-gray-light pt-6 text-center">
-        {%- include masthead.html %}
-        {%- include social.html %}
+<div class="Profile d-lg-flex flex-justify-center">
+  {%- if style != "sidebar" and style != "stacked" %}
+  <div class="col-lg-4 border-gray-light px-6 pb-6 text-center">
+    {%- include masthead.html %}
+    {%- include social.html %}
+  </div>
+  {%- endif %}
+
+  <div class="col-lg-8 color-bg-default">
+    {%- if content != blank %}
+    <div class="mb-8">
+      {{ content }}
+    </div>
+    {%- endif %}
+    {%- if links %}
+    {%- include links.html links=links %}
+    {%- endif %}
+    {%- if collection.size > 0 %}
+    <div class="mb-8">
+      <div class="pb-3">
+        <h2>Latest posts</h2>
+      </div>
+      {%- include post-timeline.html collection=collection limit=posts_limit index=first_page_path %}
     </div>
     {%- endif %}
 
-    <div class="col-lg-8 color-bg-default">
-        <div class="py-6">
-            {%- if content %}
-            <div class="mb-8">
-            {{ content }}
-            </div>
-            {%- endif %}
-            {%- if links %}
-            {%- include links.html links=links %}
-            {%- endif %}
-            {%- unless collection.size == 0 %}
-            <div class="container-xl mb-8">
-              <div class="pb-3">
-                <h2>Latest posts</h2>
-              </div>
-              {%- include post-timeline.html collection=collection limit=posts_limit index=first_page_path %}
-            </div>
-            {%- endunless %}
-
-            {%- if site.repositories %}
-            <h2 class="mb-3">Repositories</h2>
-            {%- include repositories.html %}
-            {%- endif %}
-        </div>
-    </div>
+    {%- if site.repositories and site.github.public_repositories.size > 0 %}
+    <h2 class="mb-3">Repositories</h2>
+    {%- include repositories.html %}
+    {%- endif %}
+  </div>
 </div>

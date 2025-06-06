@@ -30,12 +30,12 @@
       {%- endif %}
       {%- if repository.stargazers_count %}
       <a href="{{ repository.html_url }}/stargazers" class="mr-1 Link--muted">
-        <span class="octicon octicon-star-16"></span> {{ repository.stargazers_count }}
+        <span class="octicon octicon-star-16 v-align-middle"></span> {{ repository.stargazers_count }}
       </a>
       {%- endif %}
       {%- if repository.forks_count %}
       <a href="{{ repository.html_url }}/network/members" class="mr-1 Link--muted">
-        <span class="octicon octicon-repo-forked-16"></span> {{ repository.forks_count }}
+        <span class="octicon octicon-repo-forked-16 v-align-middle"></span> {{ repository.forks_count }}
       </a>
       {%- endif %}
     </p>
