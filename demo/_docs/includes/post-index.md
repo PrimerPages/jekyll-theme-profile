@@ -73,10 +73,9 @@ This include depends on:
 
 ## Customization
 
-You can customize the appearance by modifying the HTML structure and CSS classes within the include file. The layout uses Bootstrap flex and grid classes, which can be adjusted to fit different design requirements.
+You can customize the appearance by modifying the HTML structure and CSS classes within the include file. The layout uses Primer css flex and grid classes, which can be adjusted to fit different design requirements.
 
 ## Notes
 
 - Ensure that the `post-card.html` include is properly set up in your Jekyll site.
-- The `gutter-spacious` class is used to provide spacing between post cards. Adjust this class if you need different spacing.
 - The "View all" link uses the `collection_permalink` and `replace_value` to generate the correct URL for each section.
