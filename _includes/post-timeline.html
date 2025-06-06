@@ -13,19 +13,14 @@ index (string, optional) - Index page for the collection.
 {%- assign timeline_post_limit = include.limit | default: -1 %}
 {%- if timeline_post_limit < 0 %}{%- assign timeline_post_limit=collection.size %}{%- endif %}
 {% assign timeline_index=include.index %}
-<div class="container-xl mx-auto p-responsive-blog mb-8">
+<div class="mx-auto mb-8">
   {%- for post in timeline_collection | limit: timeline_post_limit %}
   {%- include post-timeline-card.html post=post %}
   {%- endfor %}
   {%- if timeline_collection.size > timeline_post_limit and timeline_index %}
-  <div class="mx-auto p-responsive-blog">
-    <div class="d-flex gutter-spacious">
-      <div class="col-12 col-md-7 offset-md-5">
-        <a href="{{ timeline_index | relative_url }}"
-          class="Link--primary arrow-target-mktg text-semibold btn ml-5">View all
-          <span class="octicon octicon-chevron-right-16 mb-1"></span></a>
-      </div>
-    </div>
+  <div class="mx-auto py-3">
+    <a href="{{ timeline_index | relative_url }}"
+      class="Link--primary arrow-target-mktg text-semibold btn width-full text-center">More</a>
   </div>
   {%- endif %}
   </div>
