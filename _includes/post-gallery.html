@@ -24,7 +24,7 @@
 {%- assign image_class = "col-md-7 col-xl-9" %}
 {%- assign text_class = "col-md-5 col-xl-3" %}
 {%- endif %}
-<div class="d-flex flex-wrap gutter-spacious {% cycle '', 'flex-row-reverse' %}">
+<div class="d-flex flex-wrap gutter {% cycle '', 'flex-row-reverse' %}">
   {%- for post in section_posts limit: per_section %}
   {%- if forloop.first %}
   <div class="{{ image_class }}">
