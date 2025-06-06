@@ -2,7 +2,7 @@
 layout: page
 ---
 {{ content }}
-<div class="d-flex flex-wrap gutter-spacious">
+<div class="d-flex flex-wrap gutter">
 <!-- This loops through the paginated posts -->
 {%- for post in paginator.posts %}
   {%- if post.feature or post == site.posts[0] %}

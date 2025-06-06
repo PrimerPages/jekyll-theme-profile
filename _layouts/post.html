@@ -7,17 +7,14 @@ layout: default
 <div class="Blog flex-column flex-1 min-width-0">
     <div class="BlogHeader position-relative border-top">
         <div class="container-xl p-responsive">
-            <div class="gutter-spacious pt-1 ">
-                <div class="col-12 offset-lg-1 col-lg-10 col-xl-7 mt-5 mt-lg-10 mb-6 mb-lg-8">
-                    <div class="h3-mktg lh-condensed mb-3 color-header-default">{{ page.title }}</div>
-                    <p class="f4-mktg color-header-default">{{ page.description }}</p>
-                </div>
-                <div class="offset-lg-1 col-lg-10">
-                    <div class="position-relative z-1">
-                        <div class="image-container">
-                            <img src="{{ image | relative_url }}" class="cover-image rounded-2"
-                                alt="{{ page.title }}" />
-                        </div>
+            <div class="col-12 offset-lg-1 col-lg-10 col-xl-7 mt-5 mt-lg-10 mb-6 mb-lg-8">
+                <div class="h3-mktg lh-condensed mb-3 color-header-default">{{ page.title }}</div>
+                <p class="f4-mktg color-header-default">{{ page.description }}</p>
+            </div>
+            <div class="offset-lg-1 col-lg-10">
+                <div class="position-relative z-1">
+                    <div class="image-container">
+                        <img src="{{ image | relative_url }}" class="cover-image rounded-2" alt="{{ page.title }}" />
                     </div>
                 </div>
             </div>
@@ -27,7 +24,8 @@ layout: default
     </div>
     <div class="pb-5">
         <div class="container-xl mx-auto p-responsive">
-            <div class="gutter-spacious pt-5">
+            <!-- Post metadata -->
+            <div class="pt-5">
                 <div class="col-12 offset-lg-1 col-lg-10">
                     <div class="text-mono f5-mktg color-fg-muted mb-12px">Author</div>
                     <div class="d-flex flex-nowrap pb-1 flex-items-start">
@@ -41,7 +39,7 @@ layout: default
                 </div>
             </div>
             <div class="mx-auto p-responsive pt-4 pt-md-7 pb-7 pb-md-9">
-                <div class="d-flex flex-wrap gutter-spacious">
+                <div class="d-flex flex-wrap">
                     <div class="col-12 offset-lg-1 col-lg-1">
                         <ul class="list-style-none d-flex flex-lg-column position-sticky top-12">
                             <li class="mr-4 mr-lg-0 mb-4">
@@ -101,14 +99,15 @@ layout: default
                                 {%- else -%}
                                 {%- capture tag_link %}{{site.tag_archive_path}}{{ tag | slugify }}{% endcapture %}
                                 {%- endif -%}
-                                <li class="d-inline-block mt-2 mb-0"><a href="{{ tag_link | relative_url }}">{{ tag }}</a></li>
+                                <li class="d-inline-block mt-2 mb-0"><a href="{{ tag_link | relative_url }}">{{ tag
+                                        }}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>
                         {%- endif %}
                     </div>
                     <div class="col-12 col-md-4 col-lg-3 markdown-body">
-                        <div class="d-none d-md-block position-sticky top-12">
+                        <div class="d-none d-md-block position-sticky top-12 ml-5">
                             {% capture page_toc %}{{ content | toc_only }}{% endcapture %}
                             {% if page.toc and page_toc != content %}
                             <div class="mb-8 table-of-contents ">
@@ -125,7 +124,7 @@ layout: default
                 </div>
             </div>
         </div>
-        <div class="Related container-xl mx-auto p-responsive markdown-body">
+        <div class="Related container-xl mx-auto p-responsive">
             {% include related.html %}
         </div>
     </div>
