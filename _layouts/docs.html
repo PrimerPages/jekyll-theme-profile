@@ -39,7 +39,6 @@ Set edit url
 {% endcomment %}
 {%- assign github_edit_url = "https://www.github.com" | append: site.repository | append: "/blob/main" %}
 {%- assign edit_url = page.edit_url | default: site.edit_url | default: github_edit_url %}
-{%- assign toc = page.toc | default: layout.toc %}
 <div class="d-xl-flex">
     <div class="Layout bgColor-default border-right d-none d-xl-block">
         <div class="Layout-sidebar position-sticky"
@@ -137,7 +136,7 @@ Set edit url
             </div>
             <div class="col-12 col-md-4 markdown-body">
                 {% capture page_toc %}{{ content | toc_only }}{% endcapture %}
-                {% if toc and page_toc != content %}
+                {% if page.toc and layout.toc and page_toc != content and page_toc contains "/li" %}
                 <div class="position-sticky top-12 ml-5 pb-5">
                     <h4 class="ml-3 mb-1">In this article</h4>
                     {{ page_toc }}
@@ -147,25 +146,3 @@ Set edit url
         </div>
     </div>
 </div>
-
-<!-- <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    function updateTopBarHeight() {
-        const topBar = document.querySelector('.topbar');
-        const topBarHeight = topBar ? topBar.offsetHeight : 0;
-
-        // Set CSS variable
-        document.documentElement.style.setProperty('--topbar-height', `${topBarHeight}px`);
-
-        // Dispatch event in case other scripts need it
-        document.dispatchEvent(new CustomEvent('topbarHeightUpdated', {
-            detail: { topBarHeight }
-        }));
-
-        console.log("Set --topbar-height to", topBarHeight);
-    }
-
-    updateTopBarHeight();
-    window.addEventListener('resize', updateTopBarHeight);
-});
-</script> -->
