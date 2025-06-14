@@ -1,0 +1,32 @@
+---
+layout: docs
+toc: false
+---
+
+{% comment %} Ensure collection is defined {% endcomment %}
+{% unless page.collection %}
+  <p><strong>Error:</strong> This layout requires a <code>collection</code> in front matter.</p>
+  {% assign filtered_docs = "" | split: "" %}
+{% else %}
+  {% assign docs = site[page.collection] %}
+  {% assign filtered_docs = docs | where_exp: "item", "item.url != page.url" %}
+  
+  {% comment %} Filter docs by category if provided {% endcomment %}
+  {% if page.category %}
+    {% assign filtered_docs = filtered_docs | where_exp: "doc", "doc.category == page.category" %}
+  {% endif %}
+{% endunless %}
+
+{{ content }}
+
+{% comment %} Group filtered docs by category {% endcomment %}
+{% assign grouped_docs = filtered_docs | group_by: "category"%}
+<div class="d-flex flex-wrap gutter">
+  {% for group in grouped_docs %}
+  {% assign category_name = group.name | default: page.default_category %}
+  {% assign docs_in_category = group.items %}
+  {% include category_index.html
+    category=category_name
+    pages=group.items %}
+  {% endfor %}
+</div>

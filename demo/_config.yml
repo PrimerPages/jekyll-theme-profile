@@ -22,13 +22,11 @@ defaults:
       path: "" # an empty string here means all files in the project
       type: "docs"
     values:
-      categories: ["Documentation"]
       layout: "docs"
       image: /assets/img/default.png # The default image used for social and posts.
-      index: /docs/index.html
       permalink: /docs/:path:output_ext
       edit_url: "https://github.com/PrimerPages/jekyll-theme-profile/edit/main/demo"
-      toc: true
+      default_category: Other
 
 # ########### Theme settings ###############
 # The style of the website
@@ -62,12 +60,12 @@ profile_link: true # Show a link to the github profile for the user
 ##########################
 # # Social media settings
 icon_color: "#959da5" # The color of the social media icons on the site
-social_media: # Your social media accounts
+# social_media: # Your social media accounts
   # behance: your_username
   # dribbble: your_username
   # docker: your_username
   # facebook: your_username
-  github: athackst
+  # github: PrimerPages
   # hackerrank: your_username
   # instagram: your_username
   # keybase: your_username
@@ -82,9 +80,9 @@ social_media: # Your social media accounts
   # twitter: your_username
   # unsplash: your_username
   # vk: your_username
-  vscode: althack
+  # vscode: althack
   # youtube: your_username
-  x: althack
+  # x: althack
 
 ####################
 # Navigation links

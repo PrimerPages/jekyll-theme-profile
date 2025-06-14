@@ -1,7 +1,7 @@
 ---
 title: Post Gallery
 category: includes
-order: 40
+order: 42
 ---
 
 The `post-gallery.html` include file creates a magazine-style layout for displaying collections of posts. It's designed to showcase posts in a visually appealing manner, with the first post of each section displayed prominently and subsequent posts in a more compact format.

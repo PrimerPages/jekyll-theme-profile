@@ -1,6 +1,6 @@
 ---
 title: "Topbar style"
-order: 13
+order: 11
 category: Styles
 image: "../../media/topbar-preview.png"
 ---

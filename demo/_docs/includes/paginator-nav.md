@@ -1,7 +1,7 @@
 ---
 title: Paginator Navigation
 category: includes
-order: 42
+order: 41
 ---
 
 The **Paginator Navigation** include file provides a simple and accessible way to navigate paginated content within a Jekyll site. It dynamically generates pagination links for previous and next pages, as well as numbered navigation between multiple pages.

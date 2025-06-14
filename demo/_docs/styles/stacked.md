@@ -1,6 +1,6 @@
 ---
 title: "Stacked style"
-order: 12
+order: 11
 category: Styles
 image: "../../media/stacked-preview.png"
 ---

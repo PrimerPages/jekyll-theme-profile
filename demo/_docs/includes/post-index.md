@@ -1,7 +1,7 @@
 ---
 title: Post Index
 category: includes
-order: 40
+order: 42
 ---
 
 ## Purpose

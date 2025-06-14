@@ -1,6 +1,6 @@
 ---
 title: "Appbar style"
-order: 10
+order: 11
 category: Styles
 image: "../../media/appbar-preview.png"
 ---

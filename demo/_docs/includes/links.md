@@ -1,7 +1,7 @@
 ---
 title: Links
 category: includes
-order: 40
+order: 41
 ---
 
 This include file generates a collection of link cards, typically used for displaying a set of important links on a page.
