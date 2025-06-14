@@ -1,0 +1,18 @@
+{% comment %}
+Required:
+- category (String)
+- pages (Array of documents)
+=====================================
+{% endcomment %}
+{%- assign entries = include.pages %}
+{%- assign category = include.category %}
+<div class="d-flex flex-column col-12 col-sm-6 col-lg-4 col-xl-3 pb-4">
+  <h3 class="h3">{{ category | capitalize }}</h3>
+  <div class="pt-2 mb-4 text-normal">
+    <ul class="list-style-none pl-0">
+      {% for entry in entries %}
+          <li><a class="pt-2" href="{{ entry.url | relative_url }}">{{ entry.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>

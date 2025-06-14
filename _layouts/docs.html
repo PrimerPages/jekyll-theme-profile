@@ -6,52 +6,96 @@ toc: true
 {% comment %}
 Docs utilize collections to display content
 {% endcomment %}
+{% comment %}
+===================================
+Get the collection
+===================================
+{% endcomment %}
 {%- assign collection_name = page.collection %}
 {%- assign docs = site[collection_name]%}
-{%- assign index_url = page.index %}
-{%- assign docs_index = docs | where_exp: "item", "item.url == index_url" | first %}
-{%- assign docs_index_name = page.categories | first %}
-{%- assign docs_without_index = docs | where_exp: "item", "item.url != index_url" %}
-{%- assign docs_category_name = page.categories.last %}
-{%- assign edit_url = page.edit_url | default: site.edit_url %}
+{%- assign default_collection_index = site.baseurl | append: "/" | append: page.collection | append: "/index.html" %}
+{%- assign collection_index = page.index | default: default_collection_index %}
+{%- assign collection_page = docs | where_exp: "item", "item.url == collection_index" | first %}
+{% assign filtered_docs = site.docs | where_exp: "item", "item.url != collection_page.url" %}
+{% comment %}
+===================================
+Group by category
+===================================
+{% endcomment %}
+{% assign doc_categories = filtered_docs | group_by: "category" %}
+{%- assign default_category = page.default_category | default: "" %}
+{% comment %}
+===================================
+Set display info
+===================================
+{% endcomment %}
+{%- assign h_height = 150 %}{% comment %}The height of the header{% endcomment %}
+{%- assign c_height = 38 %}{% comment %}The height of the collection link {% endcomment %}
+{%- assign s_height = 55 %}{% comment %} The height of the section header {% endcomment %}
+{% comment %}
+===================================
+Set edit url
+===================================
+{% endcomment %}
+{%- assign github_edit_url = "https://www.github.com" | append: site.repository | append: "/blob/main" %}
+{%- assign edit_url = page.edit_url | default: site.edit_url | default: github_edit_url %}
+{%- assign toc = page.toc | default: layout.toc %}
 <div class="d-xl-flex">
-    <div class="Layout Layout-sidebar bgColor-default position-sticky top-12 border-right d-none d-xl-block" style="width: 326px; height: calc(-128px + 100vh);">
-        <nav>
-            <div class="d-none px-4 pb-3 border-bottom d-xl-block">
-                <div class="mt-3">
-                    {% if docs_index %}
-                    <a class="f6 pl-2 pr-5 ml-n1 pb-1 color-fg-default"
-                        href="{{ docs_index.url | relative_url }}">
-                        <span class="octicon octicon-arrow-left-16 mr-1"></span>
-                        {{ docs_index_name | capitalize }}
-                    </a>
+    <div class="Layout bgColor-default border-right d-none d-xl-block">
+        <div class="Layout-sidebar position-sticky"
+            style="top: var(--topbar-height, 150px); height: calc(100vh - var(--topbar-height, 150px));"
+            >
+            <nav>
+                <div class="d-none px-4 pb-3 border-bottom d-xl-block"
+                    style="height: calc({{c_height}}px + {{s_height}}px);">
+                    <div class="pt-3">
+                        {% if collection_page %}
+                        <a class="f6 pl-2 pr-5 ml-n1 pb-1 color-fg-default"
+                            href="{{ collection_page.url | relative_url }}">
+                            <span class="octicon octicon-arrow-left-16 mr-1"></span>
+                            {{ collection_name | capitalize }}
+                        </a>
+                        {% endif %}
+                    </div>
+                    {% if collection_page %}
+                    <h2 class="pt-3">
+                        <div class="d-block pl-1 mb-2 h3 color-fg-default no-underline">
+                            {{ collection_page.title | capitalize }}
+                        </div>
+                    </h2>
                     {% endif %}
                 </div>
-                <h2 class="mt-3">
-                    <a class="d-block pl-1 mb-2 h3 color-fg-default no-underline ">{{ docs_category_name | capitalize }}</a>
-                </h2>
-            </div>
-            <div class="border-right d-none d-xl-block bg-primary overflow-y-auto flex-shrink-0 pb-3" style="width: 326px; height: calc(-236px + 100vh);">
-                <div class="pt-3">
-                    <ul data-overflow-nav class="menu ActionList border-0 ml-3">
-                        {%- assign docs_in_category = docs_without_index | where: "category",  docs_category_name %}
-                        {%- for nav_item in docs_in_category %}
-                        <a href="{{ nav_item.url | relative_url }}" class="ActionListItem-label no-underline">
-                            <li class="menu-item ActionList-item border-0" {% if page.url==nav_item.url %}
-                                aria-current="page" {% endif %}>
-                                {{ nav_item.title }}
+                <div class="d-none d-xl-block bg-primary overflow-y-auto flex-shrink-0 pb-3"
+                    style="height: calc(100vh - var(--topbar-height, 150px) - {{c_height}}px - {{s_height}}px);">
+                    <div class="pt-3">
+                        <ul data-overflow-nav class="menu ActionList border-0 ml-3">
+                            {%- for category in doc_categories %}
+                            {%- assign category_name = category.name | default: default_category %}
+                            <li class="h4">{{ category_name | capitalize }}
+                                <ul>
+                                    {%- for nav_item in category.items %}
+                                    {% unless nav_item.url == category_page.url %}
+                                    <a href="{{ nav_item.url | relative_url }}" class="ActionListItem-label no-underline">
+                                        <li class="menu-item ActionList-item border-0" {% if page.url==nav_item.url %}
+                                            aria-current="page" {% endif %}>
+                                            {{ nav_item.title }}
+                                        </li>
+                                    </a>
+                                    {% endunless %}
+                                    {%- endfor %}
+                                </ul>
                             </li>
-                        </a>
-                        {%- endfor %}
-                    </ul>
+                            {%- endfor %}
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
     </div>
     <div class="container-xl flex-1  p-responsive pb-6">
         <div class="py-4 d-flex">
             <div class="d-xl-none">
-                {% include collection-menu.html collection=docs name=collection_name index=docs_index %}
+                {% include collection-menu.html collection=docs name=collection_name index=collection_index %}
             </div>
             {% include breadcrumbs.html %}
         </div>
@@ -93,7 +137,7 @@ Docs utilize collections to display content
             </div>
             <div class="col-12 col-md-4 markdown-body">
                 {% capture page_toc %}{{ content | toc_only }}{% endcapture %}
-                {% if page.toc and page_toc != content %}
+                {% if toc and page_toc != content %}
                 <div class="position-sticky top-12 ml-5 pb-5">
                     <h4 class="ml-3 mb-1">In this article</h4>
                     {{ page_toc }}
@@ -103,3 +147,25 @@ Docs utilize collections to display content
         </div>
     </div>
 </div>
+
+<!-- <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    function updateTopBarHeight() {
+        const topBar = document.querySelector('.topbar');
+        const topBarHeight = topBar ? topBar.offsetHeight : 0;
+
+        // Set CSS variable
+        document.documentElement.style.setProperty('--topbar-height', `${topBarHeight}px`);
+
+        // Dispatch event in case other scripts need it
+        document.dispatchEvent(new CustomEvent('topbarHeightUpdated', {
+            detail: { topBarHeight }
+        }));
+
+        console.log("Set --topbar-height to", topBarHeight);
+    }
+
+    updateTopBarHeight();
+    window.addEventListener('resize', updateTopBarHeight);
+});
+</script> -->

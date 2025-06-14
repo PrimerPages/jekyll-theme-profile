@@ -1,7 +1,7 @@
 ---
 title: Post Timeline
 category: includes
-order: 40
+order: 42
 ---
 
 This include file generates a timeline of posts with an optional "View all" link at the end. It's designed to be flexible and customizable through various parameters.
