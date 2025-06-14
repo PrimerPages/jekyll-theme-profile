@@ -20,7 +20,7 @@
 {%- assign icon = post.type | default: "comment" %}
 <div class="TimelineItem flex-wrap">
   <div class="col-12 col-md-5 position-relative">
-    <div class="TimelineItem-title mt-5 position-sticky d-flex">
+    <div class="TimelineItem-title mt-5 position-sticky d-flex topbar-aware-top">
       <div class="TimelineItem-badge"><span class="octicon octicon-{{ icon }}-16"></span></div>
       <div class="title mb-5">
         <div class="h2">
@@ -76,4 +76,27 @@
     </div>
 
   </div>
+  <script>
+    (function () {
+      const card = document.currentScript.closest('.TimelineItem');
+      if (!card) return;
+
+      const videocontainer = card.querySelector('.timeline-video-container');
+      const iframe = card.querySelector('.Timeline-video');
+      const title = card.querySelector('.TimelineItem-title');
+
+      function setIframeDimensions() {
+        if (!videocontainer || !iframe) return;
+        iframe.style.width = container.offsetWidth + 'px';
+        iframe.style.height = container.offsetHeight + 'px';
+      }
+
+      // Initial iframe sizing
+      setIframeDimensions();
+
+      // Watch for container resize
+      new ResizeObserver(setIframeDimensions).observe(card);
+
+    })();
+  </script>
 </div>

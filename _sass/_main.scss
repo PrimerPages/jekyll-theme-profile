@@ -1,3 +1,6 @@
+:root {
+  --topbar-height: 150px;
+}
 // Needed for setting the background overlay
 body::before {
   content: "";
@@ -9,6 +12,13 @@ body::before {
   z-index: -1;
   background-color: var(--overlay-color);
   /* Use the --overlay-color variable here */
+}
+
+.topbar-aware-height {
+  height: calc(100vh - var(--topbar-height, 150px));
+}
+.topbar-aware-top {
+  top: var(--topbar-height, 150px);
 }
 
 .avatar-user {
