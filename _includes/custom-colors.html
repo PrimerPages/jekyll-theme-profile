@@ -23,7 +23,7 @@ body {
     --overlay-color: {{ dark_overlay }};
 }
 @media(prefers-color-scheme: dark) {
-[data-color-mode='auto'][data-dark-theme='dark_dimmed'] {
+[data-color-mode='auto'] {
     --overlay-color: {{ dark_overlay }};
 }
 }
@@ -35,7 +35,7 @@ body {
 }
 
 @media(prefers-color-scheme: light) {
-[data-color-mode='auto'][data-light-theme='light'] {
+[data-color-mode='auto'] {
     --overlay-color: {{ light_overlay }};
 }
 }
