@@ -37,7 +37,7 @@ Set display info
 Set edit url
 ===================================
 {% endcomment %}
-{%- assign github_edit_url = "https://www.github.com" | append: site.repository | append: "/blob/main" %}
+{%- assign github_edit_url = "https://www.github.com/" | append: site.repository | append: "/blob/main" %}
 {%- assign edit_url = page.edit_url | default: site.edit_url | default: github_edit_url %}
 <div class="d-xl-flex">
     <div class="Layout bgColor-default border-right d-none d-xl-block">
@@ -94,7 +94,7 @@ Set edit url
     <div class="container-xl flex-1  p-responsive pb-6">
         <div class="py-4 d-flex">
             <div class="d-xl-none">
-                {% include collection-menu.html collection=docs name=collection_name index=collection_index %}
+                {% include collection-menu.html collection=docs name=collection_name index=collection_page %}
             </div>
             {% include breadcrumbs.html %}
         </div>
