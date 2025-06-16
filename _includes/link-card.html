@@ -12,10 +12,11 @@ This builds a link card
 {%- endcomment %}
 
 {%- assign link = include.link %}
+{%- assign thumbnail = nil %}
 
-{%- if link.thumbail %}
+{%- if link.thumbnail %}
 {%- capture thumbnail %}
-<img src="{{ thumbnail | relative_url }}" width="48" height="48"
+<img src="{{ link.thumbnail | relative_url }}" width="48" height="48"
 class="rounded-2 box-shadow-none img-cover float-left" alt="{{ name }}">
 {%- endcapture %}
 {%- elsif link.octicon %}
