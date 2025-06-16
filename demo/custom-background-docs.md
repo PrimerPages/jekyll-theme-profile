@@ -7,5 +7,6 @@ background:
     overlay: 'rgba(0,0,0,0.75)'
   light:
     overlay: 'rgba(255,255,255,0.25)'
+edit_url: "https://github.com/PrimerPages/jekyll-theme-profile/edit/main/demo"
 ---
 This is a docs layout with a custom background image and overlay.
