@@ -14,6 +14,7 @@ Get the collection
 {%- assign collection_name = page.collection %}
 {%- assign docs = site[collection_name]%}
 {%- assign default_collection_index = site.baseurl | append: "/" | append: page.collection | append: "/index.html" %}
+<!-- default collection index: {{ default_collection_index }}-->
 {%- assign collection_index = page.index | default: default_collection_index %}
 {%- assign collection_page = docs | where_exp: "item", "item.url == collection_index" | first %}
 {% assign filtered_docs = site.docs | where_exp: "item", "item.url != collection_page.url" %}
@@ -30,8 +31,8 @@ Set display info
 ===================================
 {% endcomment %}
 {%- assign h_height = 150 %}{% comment %}The height of the header{% endcomment %}
-{%- assign c_height = 38 %}{% comment %}The height of the collection link {% endcomment %}
-{%- assign s_height = 55 %}{% comment %} The height of the section header {% endcomment %}
+{%- assign c_height = 0 %}{% comment %}The height of the collection link {% endcomment %}
+{%- assign s_height = 0 %}{% comment %} The height of the section header {% endcomment %}
 {% comment %}
 ===================================
 Set edit url
@@ -45,25 +46,27 @@ Set edit url
             style="top: var(--topbar-height, 150px); height: calc(100vh - var(--topbar-height, 150px));"
             >
             <nav>
+                {% if collection_page %}
+                {%- assign c_height = 38 %}{% comment %}The height of the collection link {% endcomment %}
+                {%- assign s_height = 55 %}{% comment %} The height of the section header {% endcomment %}
                 <div class="d-none px-4 pb-3 border-bottom d-xl-block"
                     style="height: calc({{c_height}}px + {{s_height}}px);">
                     <div class="pt-3">
-                        {% if collection_page %}
+                        
                         <a class="f6 pl-2 pr-5 ml-n1 pb-1 color-fg-default"
                             href="{{ collection_page.url | relative_url }}">
                             <span class="octicon octicon-arrow-left-16 mr-1"></span>
                             {{ collection_name | capitalize }}
                         </a>
-                        {% endif %}
+                        
                     </div>
-                    {% if collection_page %}
                     <h2 class="pt-3">
                         <div class="d-block pl-1 mb-2 h3 color-fg-default no-underline">
                             {{ collection_page.title | capitalize }}
                         </div>
                     </h2>
-                    {% endif %}
                 </div>
+                {% endif %}
                 <div class="d-none d-xl-block bg-primary overflow-y-auto flex-shrink-0 pb-3"
                     style="height: calc(100vh - var(--topbar-height, 150px) - {{c_height}}px - {{s_height}}px);">
                     <div class="pt-3">
