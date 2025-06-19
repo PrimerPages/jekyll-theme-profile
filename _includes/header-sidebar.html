@@ -36,7 +36,7 @@
                 <div class="px-5 py-2">
                     {%- include masthead.html size="128px" %}
                 </div>
-                {%- if site.repo_info %}
+                {%- if site.repo_info and site.github %}
                 <div class="py-2">
                     {% include mini-repo-info-card.html class="Header-link no-underline" %}
                 </div>

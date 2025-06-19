@@ -21,7 +21,7 @@
             <div class="Header-item">
             {% include toggle.html %}
             </div>
-            {%- if site.repo_info %}
+            {%- if site.repo_info and site.github %}
             <div class="Header-item hide-sm">
                 {% include mini-repo-info-card.html class="Header-link" %}
             </div>

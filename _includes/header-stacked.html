@@ -1,6 +1,6 @@
 <div class="Profile text-center mt-3">
     {%- include masthead.html %}
-    {%- if site.repo_info %}
+    {%- if site.repo_info and site.github %}
     <div class="py-2">
         {% include mini-repo-info-card.html class="AppHeader-link no-underline" %}
     </div>
