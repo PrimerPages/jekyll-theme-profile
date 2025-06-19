@@ -11,6 +11,7 @@ bundle config set --local path 'vendor/bundle'
 
 # Install the version of Bundler.
 if [ -f Gemfile.lock ] && grep "BUNDLED WITH" Gemfile.lock > /dev/null; then
+    echo "Installing bundler in gemfile"
     cat Gemfile.lock | tail -n 2 | grep -C2 "BUNDLED WITH" | tail -n 1 | xargs gem install bundler -v
 fi
 
