@@ -17,7 +17,7 @@
         </div>
         <div class="AppHeader-item d-flex flex-items-center">
             {% include toggle.html %}
-            {%- if site.repo_info %}
+            {%- if site.repo_info and site.github %}
             <div class="AppHeader-item hide-sm">
                 {% include mini-repo-info-card.html class="AppHeader-link no-underline" %}
             </div>
