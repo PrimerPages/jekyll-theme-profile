@@ -53,7 +53,7 @@ jobs:
           tree _site
           cat _site/index.html
       - name: HTMLProofer
-        uses: athackst/htmlproofer-action@feat/ignore-new
+        uses: athackst/htmlproofer-action@main
         with:
           ignore_new_files: true
 

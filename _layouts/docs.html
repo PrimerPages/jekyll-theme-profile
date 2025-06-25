@@ -14,7 +14,6 @@ Get the collection
 {%- assign collection_name = page.collection %}
 {%- assign docs = site[collection_name]%}
 {%- assign default_collection_index = site.baseurl | append: "/" | append: page.collection | append: "/index.html" %}
-<!-- default collection index: {{ default_collection_index }}-->
 {%- assign collection_index = page.index | default: default_collection_index %}
 {%- assign collection_page = docs | where_exp: "item", "item.url == collection_index" | first %}
 {% assign filtered_docs = site.docs | where_exp: "item", "item.url != collection_page.url" %}
