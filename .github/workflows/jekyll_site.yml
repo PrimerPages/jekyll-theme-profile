@@ -62,7 +62,7 @@ jobs:
           JEKYLL_GITHUB_TOKEN: ${{ github.token }}
           JEKYLL_FOLDER: ${{ vars.JEKYLL_FOLDER }}
       - name: HTMLProofer
-        uses: athackst/htmlproofer-action@v0.3.2
+        uses: athackst/htmlproofer-action@v0.4.0
         with:
           ignore_urls: |
             https://opensource.org/license/mit/
