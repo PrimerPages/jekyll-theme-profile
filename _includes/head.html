@@ -7,7 +7,9 @@
   {% seo %}
 
   <link href="{{ '/assets/css/theme.css' | relative_url }}" rel="stylesheet" type="text/css">
-  <link href="{{ '/assets/css/style.css' | relative_url }}" rel="stylesheet" type="text/css">
+  {% if site.css %}<link href="{{ site.css }}" rel="stylesheet" type="text/css">
+  {% else %}<link href="{{ '/assets/css/style.css' | relative_url }}" rel="stylesheet" type="text/css">
+  {% endif %}
   <link rel="icon" type="image/x-icon" href="{{ favicon | relative_url}}">
 
 
@@ -26,7 +28,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="{{ '/assets/js/theme-toggle.js' | relative_url }}"></script>
   <script src="{{ '/assets/js/anchor-links.js' | relative_url }}"></script>
-  <script src="{{ '/assets/js/timeline.js' | relative_url }}"></script>
+  <script src="{{ '/assets/js/topbar.js' | relative_url }}"></script>
 
   {%- include custom-colors.html %}
 

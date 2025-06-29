@@ -1,28 +1,33 @@
 {%- assign collection = include.collection %}
-{%- assign collection_permalink = include.collection_permalink | default: ':name' %}
-{%- assign replace_value = include.replace_value | default: ':name' %}
-{%- assign per_section = include.per_section | default: 6 %}
+{%- assign collection_permalink = include.collection_permalink %}
+{%- assign replace_value = include.replace_value %}
+{%- assign per_section = include.per_section %}
 
 {% for section in collection %}
 {%- assign section_name = section | first %}
 {%- assign section_slug = section_name | slugify %}
 {%- assign section_posts = section | last %}
+{%- assign per_section = include.per_section | default: section_posts.size %}
 <div class="section-heading d-flex flex-items-center flex-justify-between mb-4 mb-lg-7">
   <h2 class="h6-mktg border-bottom-0">{{ section_name | capitalize }}</h2>
-  {%- if section_posts.size > per_section %}
+  {%- if section_posts.size > per_section and collection_permalink and replace_value %}
   <div class="d-none d-lg-flex flex-items-center">
-    <a href="{{ collection_permalink  | replace: replace_value, section_slug | relative_url }}" class="Link--primary arrow-target-mktg text-semibold">View all {% octicon chevron-right height:16 %}</a>
+    <a href="{{ collection_permalink  | replace: replace_value, section_slug | relative_url }}"
+      class="Link--primary arrow-target-mktg text-semibold">View all
+      <span class="octicon octicon-chevron-right-16"></span></a>
   </div>
   {%- endif %}
-  </div>
-<div class="d-flex flex-wrap gutter-spacious mb-4">
+</div>
+<div class="d-flex flex-wrap gutter mb-4">
   {% for post in section_posts limit: per_section %}
   {%- include post-card.html %}
   {% endfor %}
 </div>
 {%- if section_posts.size > per_section %}
 <div class="mb-7 mb-md-8 pt-5 text-right d-lg-none border-top">
-  <a href="{{ collection_permalink | replace: replace_value, section_slug | relative_url }}" class="Link--primary arrow-target-mktg text-semibold">View all {% octicon chevron-right height:16 %}</a>
+  <a href="{{ collection_permalink | replace: replace_value, section_slug | relative_url }}"
+    class="Link--primary arrow-target-mktg text-semibold">View all
+    <span class="octicon octicon-chevron-right-16"></span></a>
 </div>
 {%- endif %}
 {% endfor %}

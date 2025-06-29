@@ -1,7 +1,7 @@
 ---
 title: Post Timeline Card
 category: includes
-order: 40
+order: 42
 ---
 
 The **Post Timeline Card** include file is responsible for rendering individual posts within a timeline layout. It provides a structured and customizable way to display posts with metadata such as title, author, date, tags, and optional media (images or videos).

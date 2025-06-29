@@ -1,4 +1,4 @@
-breaking: ['major/*', 'breaking/*']
+major: ['major/*', 'breaking/*']
 bug: ['fix/*', 'bugfix/*', 'bug/*']
 dependencies: ['deps/*', 'dependencies/*']
 docs: ['docs/*', 'doc/*']

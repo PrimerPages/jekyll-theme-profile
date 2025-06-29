@@ -6,17 +6,17 @@ layout: default
 {%- if title == page.tag %}
 {%- assign subtype = "tag" %}
 {%- endif %}
-<div class="Page flex-column flex-1 min-width-0">
-{% if title %}
-    <div class="container-xl p-3 px-md-5 pt-6">
+<div class="Page flex-column flex-1 min-width-0 py-6">
+    <div class="container-xl mx-auto p-responsive">
+        {% if title %}
         {% if subtype %}
         <p class="f4-mktg color-text-tertiary mb-n4">{{ subtype | downcase }}</p>
         {% endif %}
         <h1 class="h3-mktg mt-6 mb-4">{{ title | capitalize }}</h1>
+        {% endif %}
+        <div class="markdown-body">
+            {{ content }}
+        </div>
+        <div class="flex-1"></div>
     </div>
-{% endif %}
-    <div class="container-xl p-3 px-md-5 markdown-body mb-6">
-        {{ content }}
-    </div>
-    <div class="flex-1"></div>
 </div>

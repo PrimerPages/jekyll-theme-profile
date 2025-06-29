@@ -1,7 +1,7 @@
 ---
 layout: page
 ---
-<div class="d-flex flex-wrap gutter-spacious border-top">
+<div class="d-flex flex-wrap gutter border-top">
 {% for post in page.posts %}
     {%- if post.feature or forloop.first %}
         {%- include post-feature-card.html %}

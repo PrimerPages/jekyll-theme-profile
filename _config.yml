@@ -3,7 +3,7 @@ theme: jekyll-theme-profile
 title: Jekyll Theme Profile
 description: Theme built with jekyll-theme-profile
 # image: /assets/img/social-preview.png
-# repository: athackst/jekyll-theme-profile
+repository: PrimerPages/jekyll-theme-profile
 
 defaults:
   - scope:
@@ -96,10 +96,11 @@ related_by: "tags or categories"
 
 # ########### Plugin settings ###############
 plugins:
-  - jekyll-github-metadata
-  - jekyll-octicons
+  # - jekyll-github-metadata
+  # - jekyll-meta
+  # - jekyll-octicons
   - jekyll-seo-tag
-  - jekyll-toc
+  # - jekyll-toc
   - jemoji
 
 ####################
@@ -130,3 +131,4 @@ exclude:
   - Gemfile.lock
   - node_modules
   - vendor/
+  - integration/

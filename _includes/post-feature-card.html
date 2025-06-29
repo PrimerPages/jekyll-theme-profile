@@ -1,15 +1,15 @@
 {%- assign image = post.image | default: site.image %}
 {%- assign excerpt = post.description | default: post.excerpt %}
-
-<div class="py-4 d-flex flex-column flex-md-row flex-md-row-reverse p-responsive col-12">
-  <div class="col-12 col-lg-8 p-responsive">
+<!-- Post feature card -->
+<div class="d-flex flex-column flex-md-row flex-md-row-reverse py-4 col-12">
+  <div class="col-12 col-lg-8">
     <div class="image-container">
       <a href="{{ post.url | relative_url }}">
         <img class="rounded-2" src="{{ image | relative_url }}" width="800" height="425" alt="{{ post.title }}">
       </a>
     </div>
   </div>
-  <div class="col-12 col-lg-4 pt-lg-4 p-responsive">
+  <div class="col-12 col-lg-4 pt-lg-4">
     <h3 class="h4-mktg mb-12px">
       <a class="Link--primary" href="{{ post.url | relative_url }}">{{ post.title }}</a>
     </h3>

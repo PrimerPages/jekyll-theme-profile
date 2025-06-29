@@ -1,7 +1,7 @@
 ---
 title: Collection Menu
 category: includes
-order: 40
+order: 41
 ---
 
 The **Collection Menu** include file generates a dropdown navigation menu for a Jekyll collection, grouping items by their `category` field. It is particularly useful for displaying structured documentation, guides, or other content collections.

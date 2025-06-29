@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['allison@allisonthackston.com']
 
   spec.summary       = "Jekyll theme built off of Github's personal website template and primer."
-  spec.homepage      = 'https://www.althack.dev/jekyll-theme-profile'
+  spec.homepage      = 'https://primerpages.github.io/jekyll-theme-profile/'
   spec.license       = 'MIT'
 
   spec.files = Dir.glob([
@@ -22,12 +22,8 @@ Gem::Specification.new do |spec|
                         ])
 
   spec.required_ruby_version = '>=2.7.0'
-  spec.add_dependency 'csv', '~> 3.3.0'
   spec.add_dependency 'jekyll', '> 3.5', '< 5.0'
-  spec.add_runtime_dependency 'jekyll-github-metadata', '~> 2.9'
-  spec.add_runtime_dependency 'jekyll-octicons', '~> 19.4'
-  spec.add_runtime_dependency 'jekyll-seo-tag', '~> 2.0'
-  spec.add_runtime_dependency 'jekyll-toc', '~> 0.18'
-  spec.add_runtime_dependency 'jemoji', '~> 0.11'
+  spec.add_runtime_dependency 'jekyll-seo-tag', '~> 2.8'
+  spec.add_runtime_dependency 'jemoji', '~> 0.13'
   spec.add_runtime_dependency 'kramdown-parser-gfm', '~> 1.1.0'
 end

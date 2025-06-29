@@ -1,23 +1,7 @@
 ---
-title: Documentation
+layout: docs_index
+collection: docs
+default_category: Other
 order: 0
+title: Documentation
 ---
-{% assign default_category = "Other" %}
-{% assign docs_without_current = site.docs | where_exp: "item", "item.url != page.url" %}
-<ul>
-  {% assign doc_categories = docs_without_current | group_by: "category" %}
-  {% for category in doc_categories %}
-  {% assign category_name = category.name | default: default_category %}
-  <li>{{ category_name | capitalize }}
-    <ul>
-      {% for doc in category.items %}
-      {% unless doc.url == page.url %}
-      <li>
-        <a href="{{ doc.url | relative_url }}">{{ doc.title }}</a>
-      </li>
-      {% endunless %}
-      {% endfor %}
-    </ul>
-  </li>
-  {% endfor %}
-</ul>

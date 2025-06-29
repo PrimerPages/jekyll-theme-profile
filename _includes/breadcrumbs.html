@@ -11,6 +11,9 @@
             </li>
             {%- continue %}
             {%- endif %}
+            {%- if crumb == crumbs.last %}
+            {%- continue %}
+            {%- endif %}
             {%- assign index_url = url | append: crumb | append: "/index.html" %}
             {%- assign isa_index = site.pages | where: "url", index_url | first %}
             {%- assign folder_url = url | append: crumb | append: "/" %}
@@ -52,7 +55,7 @@
                 {{ nice_crumb }}
             </li>
             {%- endif %}
-            {%- unless crumb == crumbs.last %}{%- assign url = url | append: "/" %}{%- endunless %}
+            {%- assign url = url | append: "/" %}
             {%- endfor %}
         </ol>
     </nav>

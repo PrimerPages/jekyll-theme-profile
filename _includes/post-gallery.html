@@ -1,17 +1,19 @@
 {%- assign collection = include.collection %}
-{%- assign collection_permalink = include.collection_permalink | default: ':name' %}
-{%- assign replace_value = include.replace_value | default: ':name' %}
-{%- assign per_section = include.per_section | default: 3 %}
+{%- assign collection_permalink = include.collection_permalink %}
+{%- assign replace_value = include.replace_value %}
 
 {%- for section in collection %}
 {%- assign section_name = section | first %}
 {%- assign section_slug = section_name | slugify %}
 {%- assign section_posts = section | last %}
+{%- assign per_section = include.per_section | default: section_posts.size %}
 <div class="section-heading d-flex flex-items-center flex-justify-between mb-4 mb-lg-7">
   <h2 class="h6-mktg border-bottom-0">{{ section_name | capitalize }}</h2>
-  {%- if section_posts.size > per_section %}
+  {%- if section_posts.size > per_section and collection_permalink and replace_value %}
   <div class="d-none d-lg-flex flex-items-center">
-    <a href="{{ collection_permalink | replace: replace_value, section_slug | relative_url }}" class="Link--primary arrow-target-mktg text-semibold">View all {% octicon chevron-right height:16 %}</a>
+    <a href="{{ collection_permalink | replace: replace_value, section_slug | relative_url }}"
+      class="Link--primary arrow-target-mktg text-semibold">View all 
+      <span class="octicon octicon-chevron-right-16"></span></a>
   </div>
   {%- endif %}
 </div>
@@ -22,24 +24,26 @@
 {%- assign image_class = "col-md-7 col-xl-9" %}
 {%- assign text_class = "col-md-5 col-xl-3" %}
 {%- endif %}
-<div class="d-flex flex-wrap gutter-spacious {% cycle '', 'flex-row-reverse' %}">
+<div class="d-flex flex-wrap gutter {% cycle '', 'flex-row-reverse' %}">
   {%- for post in section_posts limit: per_section %}
   {%- if forloop.first %}
   <div class="{{ image_class }}">
     {% include post-tease-image-card.html %}
   </div>
   <div class="{{ text_class }}">
-  {%- else %}
+    {%- else %}
     <div class="{% unless forloop.last %}border-bottom{% endunless %}">
-    {% include post-tease-text-card.html %}
+      {% include post-tease-text-card.html %}
     </div>
-  {%- endif %}
-  {%- endfor %}
+    {%- endif %}
+    {%- endfor %}
   </div>
 </div>
 {%- if section_posts.size > per_section %}
 <div class="mb-7 mb-md-8 pt-5 text-right d-lg-none border-top">
-  <a href="{{ collection_permalink | replace: replace_value, section_slug | relative_url }}" class="Link--primary arrow-target-mktg text-semibold">View all {% octicon chevron-right height:16 %}</a>
+  <a href="{{ collection_permalink | replace: replace_value, section_slug | relative_url }}"
+    class="Link--primary arrow-target-mktg text-semibold">View all 
+    <span class="octicon octicon-chevron-right-16"></span></a>
 </div>
 {%- endif %}
 {%- endfor %}

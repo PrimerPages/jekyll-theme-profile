@@ -1,7 +1,7 @@
 ---
 title: Link Card
 category: includes
-order: 40
+order: 41
 ---
 
 This include file generates a card for displaying a link with optional thumbnail and description. It's designed to be flexible and can display as either a clickable link or a text-only card.

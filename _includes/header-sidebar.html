@@ -17,9 +17,9 @@
 </script>
 <div class="Header d-flex border-right flex-items-start p-0 flex-justify-end position-sticky background-fixed top-0">
     <div class="flex-column flex-1 position-sticky top-0">
-        <div class="Toolbar topbar d-flex flex-row py-3 flex-lg-justify-end flex-justify-start">
+        <div class="Toolbar topbar d-flex flex-row p-3 flex-lg-justify-end flex-justify-start">
             <div class="Toolbar-expand d-flex flex-justify-center d-none">
-                <button id="sidebar-btn" class="btn-octicon mr-2">{% octicon chevron-right height:16 %}</button>
+                <button id="sidebar-btn" class="btn-octicon mr-2"><span class="octicon octicon-chevron-right-16"></span></button>
             </div>
             <div class="d-flex flex-justify-center d-lg-none">
                 {%- include nav-overlay.html %}
@@ -28,7 +28,7 @@
                 {% include toggle.html %}
             </div>
             <div class="Toolbar-collapse d-flex flex-justify-center d-none d-lg-block">
-                <button id="toolbar-btn" class="btn-octicon mr-2">{% octicon chevron-left height:16 %}</button>
+                <button id="toolbar-btn" class="btn-octicon mr-2"><span class="octicon octicon-chevron-left-16"></span></button>
             </div>
         </div>
         <div class="Sidebar d-none d-lg-block Layout Layout-sidebar Layout--sidebar-wide">
@@ -36,7 +36,7 @@
                 <div class="px-5 py-2">
                     {%- include masthead.html size="128px" %}
                 </div>
-                {%- if site.repo_info %}
+                {%- if site.repo_info and site.github %}
                 <div class="py-2">
                     {% include mini-repo-info-card.html class="Header-link no-underline" %}
                 </div>

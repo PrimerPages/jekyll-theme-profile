@@ -53,10 +53,9 @@ jobs:
           tree _site
           cat _site/index.html
       - name: HTMLProofer
-        run: .github/test.sh
-        env:
-          BASEURL: ${{ steps.pages.outputs.base_path }}
-          HOSTURL: ${{ steps.pages.outputs.host }}
+        uses: athackst/htmlproofer-action@main
+        with:
+          ignore_new_files: true
 
   success:
     if: always()

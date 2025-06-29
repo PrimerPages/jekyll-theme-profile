@@ -12,16 +12,16 @@
     <div class="flex-1">
         <div class="d-flex">
             <div class="Header-item">
-                <button id="expansion-btn" class="btn-octicon mr-2 d-sm-none">{% octicon three-bars height:16 %}</button>
-                <a href="{{ site.baseurl }}/" class="Header-link f4 d-flex flex-items-center">
-                    {% octicon mark-github height:32 %}
+                <button id="expansion-btn" class="btn-octicon mr-2 d-sm-none"><span class="octicon octicon-three-bars-16"></span></button>
+                <a href="{{ site.baseurl }}/" class="Header-link h1 f4 d-flex flex-items-center">
+                    <span class="octicon octicon-mark-github-24"></span>
                 </a>
             </div>
             <a href="{{ site.baseurl }}/" class="Header-item Header-link Header-item--full">{{ name }}</a>
             <div class="Header-item">
             {% include toggle.html %}
             </div>
-            {%- if site.repo_info %}
+            {%- if site.repo_info and site.github %}
             <div class="Header-item hide-sm">
                 {% include mini-repo-info-card.html class="Header-link" %}
             </div>

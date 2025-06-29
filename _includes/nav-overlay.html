@@ -30,14 +30,14 @@
                 </div>
                 <div class="d-flex flex-justify-end">
                     <button class="SelectMenu-closeButton close-menu" type="button">
-                        {% octicon x height: 16 %}
+                        <span class="octicon octicon-x-16"></span>
                     </button>
                 </div>
             </div>
 
             <div class="SelectMenu-list">
                 {%- for nav_item in site.nav %}
-                <a href="{{ nav_item.url }}" class="SelectMenu-item" role="menuitem"{% if page.url contains nav_item.url %} aria-current="page"{% endif %}>{{ nav_item.name }}</a>
+                <a href="{{ site.baseurl }}{{ nav_item.url }}" class="SelectMenu-item" role="menuitem"{% if page.url contains nav_item.url %} aria-current="page"{% endif %}>{{ nav_item.name }}</a>
                 {%- endfor %}
             </div>
             <div class="SelectMenu-footer">

@@ -6,99 +6,144 @@ toc: true
 {% comment %}
 Docs utilize collections to display content
 {% endcomment %}
-{%- assign collection_name = page.collection | default: "docs" %}
+{% comment %}
+===================================
+Get the collection
+===================================
+{% endcomment %}
+{%- assign collection_name = page.collection %}
 {%- assign docs = site[collection_name]%}
-{%- assign index_url = page.index %}
-{%- assign docs_index = docs | where_exp: "item", "item.url == index_url" | first %}
-{%- assign docs_without_index = docs | where_exp: "item", "item.url != index_url" %}
-{%- assign edit_url = page.edit_url | default: site.edit_url %}
-
-<div class="d-lg-flex flex-1">
-    <div class="Layout Layout-sidebar bgColor-default position-sticky border-right d-none d-xl-block">
-        <div class="px-4 pb-3 border-bottom">
-            <div class="mt-3">
-                {% if docs_index %}
-                <a class="d-block pl-1 mb-2 h3 color-fg-default no-underline"
-                    href="{{ docs_index.url | relative_url }}">
-                    {{ collection_name | capitalize }}
-                </a>
-                {% else %}
-                <h3 class="d-block pl-1 mb-2 h3 color-fg-default no-underline">{{ collection_name | capitalize }}</h3>
-                {% endif %}
-            </div>
-        </div>
-        <div class="pt-3">
-            <ul data-overflow-nav class="menu ActionList border-0 ml-3">
-                {%- assign doc_categories = docs_without_index | group_by: "category" %}
-                {%- for category in doc_categories %}
-                {%- assign category_name = category.name | default: collection_name %}
-                <li class="h4">{{ category_name | capitalize }}
-                    <ul>
-                        {%- for nav_item in category.items %}
-                        <a href="{{ nav_item.url | relative_url }}" class="ActionListItem-label no-underline">
-                            <li class="menu-item ActionList-item border-0" {% if page.url==nav_item.url %}
-                                aria-current="page" {% endif %}>
-                                {{ nav_item.title }}
-                            </li>
+{%- assign default_collection_index = site.baseurl | append: "/" | append: page.collection | append: "/index.html" %}
+{%- assign collection_index = page.index | default: default_collection_index %}
+{%- assign collection_page = docs | where_exp: "item", "item.url == collection_index" | first %}
+{% assign filtered_docs = site.docs | where_exp: "item", "item.url != collection_page.url" %}
+{% comment %}
+===================================
+Group by category
+===================================
+{% endcomment %}
+{% assign doc_categories = filtered_docs | group_by: "category" %}
+{%- assign default_category = page.default_category | default: "" %}
+{% comment %}
+===================================
+Set display info
+===================================
+{% endcomment %}
+{%- assign h_height = 150 %}{% comment %}The height of the header{% endcomment %}
+{%- assign c_height = 0 %}{% comment %}The height of the collection link {% endcomment %}
+{%- assign s_height = 0 %}{% comment %} The height of the section header {% endcomment %}
+{% comment %}
+===================================
+Set edit url
+===================================
+{% endcomment %}
+{%- assign github_edit_url = "https://www.github.com/" | append: site.repository | append: "/blob/main" %}
+{%- assign edit_url = page.edit_url | default: site.edit_url | default: github_edit_url %}
+<div class="d-xl-flex">
+    <div class="Layout bgColor-default border-right d-none d-xl-block">
+        <div class="Layout-sidebar position-sticky"
+            style="top: var(--topbar-height, 150px); height: calc(100vh - var(--topbar-height, 150px));"
+            >
+            <nav>
+                {% if collection_page %}
+                {%- assign c_height = 38 %}{% comment %}The height of the collection link {% endcomment %}
+                {%- assign s_height = 55 %}{% comment %} The height of the section header {% endcomment %}
+                <div class="d-none px-4 pb-3 border-bottom d-xl-block"
+                    style="height: calc({{c_height}}px + {{s_height}}px);">
+                    <div class="pt-3">
+                        
+                        <a class="f6 pl-2 pr-5 ml-n1 pb-1 color-fg-default"
+                            href="{{ collection_page.url | relative_url }}">
+                            <span class="octicon octicon-arrow-left-16 mr-1"></span>
+                            {{ collection_name | capitalize }}
                         </a>
-                        {%- endfor %}
-                    </ul>
-                </li>
-                {%- endfor %}
-            </ul>
+                        
+                    </div>
+                    <h2 class="pt-3">
+                        <div class="d-block pl-1 mb-2 h3 color-fg-default no-underline">
+                            {{ collection_page.title | capitalize }}
+                        </div>
+                    </h2>
+                </div>
+                {% endif %}
+                <div class="d-none d-xl-block bg-primary overflow-y-auto flex-shrink-0 pb-3"
+                    style="height: calc(100vh - var(--topbar-height, 150px) - {{c_height}}px - {{s_height}}px);">
+                    <div class="pt-3">
+                        <ul data-overflow-nav class="menu ActionList border-0 ml-3">
+                            {%- for category in doc_categories %}
+                            {%- assign category_name = category.name | default: default_category %}
+                            <li class="h4">{{ category_name | capitalize }}
+                                <ul>
+                                    {%- for nav_item in category.items %}
+                                    {% unless nav_item.url == category_page.url %}
+                                    <a href="{{ nav_item.url | relative_url }}" class="ActionListItem-label no-underline">
+                                        <li class="menu-item ActionList-item border-0" {% if page.url==nav_item.url %}
+                                            aria-current="page" {% endif %}>
+                                            {{ nav_item.title }}
+                                        </li>
+                                    </a>
+                                    {% endunless %}
+                                    {%- endfor %}
+                                </ul>
+                            </li>
+                            {%- endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
         </div>
     </div>
-    <div class="flex-1">
-        <div class="container-xl mx-auto p-responsive py-3">
-            <div class="py-4 d-flex">
-                <div class="d-xl-none">
-                    {% include collection-menu.html collection=docs name=collection_name index=docs_index %}
-                </div>
-                {% include breadcrumbs.html %}
+    <div class="container-xl flex-1  p-responsive pb-6">
+        <div class="py-4 d-flex">
+            <div class="d-xl-none">
+                {% include collection-menu.html collection=docs name=collection_name index=collection_page %}
             </div>
-            <div class="pb-5">
-                <h1 class="border-bottom-0">{{ page.title }}</h1>
-                <h3 class="f3 color-fg-muted pb-3">{{ page.description }}</h3>
+            {% include breadcrumbs.html %}
+        </div>
+        <div class="pb-5 p-responsive">
+            <h1 class="border-bottom-0">{{ page.title }}</h1>
+            <h3 class="f3 color-fg-muted pb-3">{{ page.description }}</h3>
+        </div>
+        <div class="d-flex flex-wrap-reverse">
+            <div class="col-12 col-md-8 markdown-body p-responsive">
+                {{ content }}
+
+                <!-- Pagination links -->
+                <div class="paginate-container py-3">
+                    <div role="navigation" aria-label="Pagination" class="d-inline-block pagination">
+                        {% if page.previous.url %}
+                        <a class="previous_page" rel="prev" href="{{ page.previous.url | relative_url }}"
+                            aria-disabled="false">{{page.previous.title | truncate: 20 }}</a>
+                        {% else %}
+                        <span class="previous_page disabled" aria-disabled="true">Previous</span>
+                        {% endif %}
+
+                        {% if page.next.url %}
+                        <a class="next_page" rel="next" href="{{ page.next.url | relative_url }}"
+                            aria-disabled="false">{{page.next.title | truncate: 20 }}</a>
+                        {% else %}
+                        <span class="next_page disabled" aria-disabled="true">Next</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Edit link -->
+                {% if edit_url %}
+                <div class="doc-footer border-top my-8 py-5">
+                    <a href="{{ edit_url }}/{{ page.path }}">
+                        <span class="octicon octicon-pencil-16"></span>
+                        Edit this page</a>
+                </div>
+                {% endif %}
             </div>
-            <div class="d-flex flex-wrap-reverse">
-                <div class="col-12 col-md-8 markdown-body">
-                    {{ content }}
-
-                    <!-- Pagination links -->
-                    <div class="paginate-container py-3">
-                        <div role="navigation" aria-label="Pagination" class="d-inline-block pagination">
-                            {% if page.previous.url %}
-                            <a class="previous_page" rel="prev" href="{{ page.previous.url | relative_url }}"
-                                aria-disabled="false">{{page.previous.title | truncate: 20 }}</a>
-                            {% else %}
-                            <span class="previous_page disabled" aria-disabled="true">Previous</span>
-                            {% endif %}
-
-                            {% if page.next.url %}
-                            <a class="next_page" rel="next" href="{{ page.next.url | relative_url }}"
-                                aria-disabled="false">{{page.next.title | truncate: 20 }}</a>
-                            {% else %}
-                            <span class="next_page disabled" aria-disabled="true">Next</span>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <!-- Edit link -->
-                    {% if edit_url %} 
-                    <div class="doc-footer border-top my-8 py-5">
-                        <a href="{{ edit_url }}/{{ page.path }}">{% octicon pencil height: 16 %} Edit this page</a>
-                    </div>
-                    {% endif %}
+            <div class="col-12 col-md-4 markdown-body">
+                {% capture page_toc %}{{ content | toc_only }}{% endcapture %}
+                {% if page.toc and layout.toc and page_toc != content and page_toc contains "/li" %}
+                <div class="position-sticky top-12 ml-5 pb-5">
+                    <h4 class="ml-3 mb-1">In this article</h4>
+                    {{ page_toc }}
                 </div>
-                <div class="col-12 col-md-4 markdown-body">
-                    {% capture page_toc %}{{ content | toc_only }}{% endcapture %}
-                    {% if page_toc contains "</li>" %}
-                    <div class="position-sticky top-12 ml-5 pb-5">
-                        <h4 class="ml-3 mb-1">In this article</h4>
-                        {{ page_toc }}
-                    </div>
-                    {% endif %}
-                </div>
+                {% endif %}
             </div>
         </div>
     </div>

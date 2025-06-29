@@ -12,7 +12,7 @@ subtype: Category
 {% assign limit = posts.size %}
 {% endif %}
 
-<div class="d-flex flex-wrap gutter-spacious border-top">
+<div class="d-flex flex-wrap gutter border-top">
   <!-- Show post excerpts for the current page -->
   {% for post in posts limit: limit %}
   {%- if post.feature or post == site.categories[page.category][0] %}

@@ -1,39 +1,43 @@
-<div class="github-component d-flex flex-column flex-justify-between height-full text-left border border-gray-light rounded-1 p-3">
+<div
+  class="github-component d-flex flex-column flex-justify-between height-full text-left border border-gray-light rounded-1 p-3">
   <div>
     <div class="d-flex flex-justify-between flex-items-start mb-1">
       <h1 class="f4 lh-condensed my-1">
-        {% octicon repo height:20 class:"mr-1 v-align-middle" fill:"#586069" aria-label:repo %}
+        <span class="octicon octicon-repo-24"></span>
         <a href="{{repository.html_url}}">{{ repository.name }}</a>
       </h1>
     </div>
     <div class="text-gray mb-2 ws-normal">{{ repository.description }}</div>
     {%- if repository.homepage != blank %}
     <div class="mb-2 d-flex flex-items-center Link--secondary">
-      {% octicon link height:16 class:"mr-2" %}
+      <div class="mr-2">
+        <span class="octicon octicon-link-16"></span>
+      </div>
       <span class="flex-auto min-width-0 css-truncate css-truncate-target width-fit">
-        <a title="{{ repository.homepage }}" role="link" target="_blank" class="text-bold" href="{{ repository.homepage }}">{{repository.homepage}}</a>
+        <a title="{{ repository.homepage }}" role="link" target="_blank" class="text-bold"
+          href="{{ repository.homepage }}">{{repository.homepage}}</a>
       </span>
     </div>
     {%- endif %}
   </div>
   <div class="d-flex f6">
     <p class="mb-0 mt-2 f6 color-fg-muted">
-    {%- if repository.language %}
+      {%- if repository.language %}
       <span class="d-inline-block mr-1">
         <span class="repo-language-color" data-language="{{ repository.language }}"></span>
         <span itemprop="programmingLanguage">{{ repository.language }}</span>
       </span>
-    {%- endif %}
-    {%- if repository.stargazers_count %}
+      {%- endif %}
+      {%- if repository.stargazers_count %}
       <a href="{{ repository.html_url }}/stargazers" class="mr-1 Link--muted">
-        {% octicon star height:16 fill:"#ffffff" %} {{ repository.stargazers_count }}
+        <span class="octicon octicon-star-16 v-align-middle"></span> {{ repository.stargazers_count }}
       </a>
-    {%- endif %}
-    {%- if repository.forks_count %}
+      {%- endif %}
+      {%- if repository.forks_count %}
       <a href="{{ repository.html_url }}/network/members" class="mr-1 Link--muted">
-        {% octicon repo-forked height:16 fill:"#ffffff" %} {{ repository.forks_count }}
+        <span class="octicon octicon-repo-forked-16 v-align-middle"></span> {{ repository.forks_count }}
       </a>
-    {%- endif %}
+      {%- endif %}
     </p>
   </div>
 </div>

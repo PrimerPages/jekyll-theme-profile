@@ -9,20 +9,21 @@
 <body class="min-height-full d-flex flex-column">
     {%- if style == 'topbar' %}
     {% include header-topbar.html %}
-    <div class="d-lg-flex flex-1">
+    <div class="d-flex flex-1 flex-column">
     {%- elsif style == 'appbar' %}
     {% include header-appbar.html %}
-    <div class="d-lg-flex flex-1">
+    <div class="d-flex flex-1 flex-column">
     {%- elsif style == 'stacked' %}
     {% include header-stacked.html %}
-    <div class="d-lg-flex flex-1">
+    <div class="d-flex flex-1 flex-column">
     {%- elsif style == 'sidebar' %}
     <div class="d-lg-flex flex-1">
-        {% include header-sidebar.html %}
+    {% include header-sidebar.html %}
+    {% else %} {% comment %}<!-- Default to appbar -->{% endcomment %}
+    {% include header-appbar.html %}
+    <div class="d-flex flex-1 flex-column">
     {%- endif %}
-
     {{ content }}
-
     </div>
 
     {%- include footer.html %}

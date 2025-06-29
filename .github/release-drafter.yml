@@ -5,8 +5,8 @@ template: |
 
   $CHANGES
 categories:
-  - title: ':zap: Breaking'
-    label: 'breaking'
+  - title: ':zap: Major'
+    label: 'major'
   - title: ':rocket: New'
     label: 'feature'
   - title: ':bug: Bug Fixes'
