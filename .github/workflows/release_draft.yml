@@ -14,7 +14,7 @@ jobs:
       pull-requests: write  # Required for modifying the PR
     steps:
       - name: Checkout main branch
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Run Release Drafter
         id: release-draft
