@@ -36,7 +36,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create or Update Release PR
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         if: github.event_name == 'workflow_dispatch' || env.PR_EXISTS == 'true'
         with:
           branch: release/v${{ steps.release-draft.outputs.tag_name }}
