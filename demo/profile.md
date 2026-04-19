@@ -1,4 +1,0 @@
----
-layout: profile
-style: appbar
----

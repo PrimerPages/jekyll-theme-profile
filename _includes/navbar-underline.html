@@ -1,11 +1,14 @@
 <nav class="UnderlineNav">
     <ul class="UnderlineNav-body flex-row list-style-none">
-{%- for nav_item in site.nav %}
+        {%- for nav_item in site.nav %}
         <li class="d-inline-flex">
-            <a href="{{ nav_item.url | relative_url }}" class="UnderlineNav-item m-2" {% if page.url contains nav_item.url %}aria-current="page"{% endif %}>
-                {{ nav_item.name }}
-            </a>
+          <a href="{{ nav_item.url | relative_url }}" class="UnderlineNav-item m-2"
+             {% if page.url == nav_item.url or (nav_item.url != '/' and page.url contains nav_item.url) %}
+               aria-current="page"
+             {% endif %}>
+            {{ nav_item.name }}
+          </a>
         </li>
-{%- endfor %}
+      {%- endfor %}
     </ul>
 </nav>
