@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['allison@allisonthackston.com']
 
   spec.summary       = "Jekyll theme built off of Github's personal website template and primer."
-  spec.homepage      = 'https://primerpages.github.io/jekyll-theme-profile/'
+  spec.homepage      = 'https://www.primerpages.com'
   spec.license       = 'MIT'
 
   spec.files = Dir.glob([
