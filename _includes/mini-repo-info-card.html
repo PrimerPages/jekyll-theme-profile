@@ -1,6 +1,8 @@
 {% assign repo = site.github.public_repositories | where: "full_name", site.repository | first %}
+{% assign default_repository_url = "https://www.github.com/" | append: site.repository %}
+{% assign repository_url = site.github.repository_url | default: default_repository_url | default: "" %}
 <div class="Repo-info">
-    <a href="{{ site.github.repository_url }}" class="{{ include.class }} tooltipped tooltipped-s" aria-label="Go to repository">
+    <a href="{{ repository_url }}" class="{{ include.class }} tooltipped tooltipped-s" aria-label="Go to repository">
         <div class="d-flex flex-row flex-justify-center Header-item">
 
             <div class="mr-2 h2"><span class="octicon octicon-git-branch-24"></span></div>
