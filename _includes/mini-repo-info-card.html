@@ -10,6 +10,7 @@
                 <div>
                     {{ site.repository }}
                 </div>
+                {% if site.github %}
                 <div class="d-flex flex-row">
                     {%- if site.github.latest_release %}
                     <div class="mr-3">
@@ -21,6 +22,7 @@
                     <div class="mr-0"><span><span class="octicon octicon-repo-forked-16"></span> {{ repo.forks_count }}</span></div>
                     {% endif %}
                 </div>
+                {% endif %}
             </div>
 
         </div>
