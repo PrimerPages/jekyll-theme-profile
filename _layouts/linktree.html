@@ -5,14 +5,18 @@ style: none
 {%- assign socials=page.socials | default: layout.socials | default: nil %}
 {%- assign links=page.links | default: site.links | default: nil %}
 {%- assign style = page.style | default: layout.style | default: site.style %}
-<div class="flex-column flex-1 min-width-0 py-3">
-    <div class="d-flex mt-4 p-responsive container-md flex-row py-3 flex-justify-end">
+<div class="flex-column flex-1 min-width-0 py-4">
+     {% if page.style == 'none' %}
+    <div class="d-flex p-responsive container-md flex-row py-3 flex-justify-end">
         <div class="d-flex flex-justify-center">
-            {% if style == 'none' %}{% include toggle.html %}{% endif %}
+           {% include toggle.html %}
         </div>
     </div>
+    {% endif %}
     {%- if style != "sidebar" and style != "stacked" %}
+    <div class="mt-4">
     {%- include masthead.html size="96px" %}
+    </div>
     {%- endif %}
     {%- if socials == "top" %}
     {%- include social.html %}
