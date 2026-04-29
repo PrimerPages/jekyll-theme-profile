@@ -1,4 +1,4 @@
-{%- assign style = page.style | default: layout.style | default: site.style %}
+{%- assign style = page.style | default: layout.style | default: site.style | default: "appbar" %}
 {%- assign light_theme = site.light_theme | default: "light" %}
 {%- assign dark_theme = site.dark_theme | default: "dark" %}
 <!doctype html>
@@ -19,7 +19,7 @@
     {%- elsif style == 'sidebar' %}
     <div class="d-lg-flex flex-1">
     {% include header-sidebar.html %}
-    {% else %} {% comment %}<!-- Default to appbar -->{% endcomment %}
+    {% elsif style == 'appbar' %}
     {% include header-appbar.html %}
     <div class="d-flex flex-1 flex-column">
     {%- endif %}
