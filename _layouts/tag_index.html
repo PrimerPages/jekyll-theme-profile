@@ -9,8 +9,8 @@ layout: page
 {%- assign per_section = page.per_section | default: page.pagination.per_page %}
 
 {% include post-index.html
-  collection=tags
-  collection_permalink=tag_permalink
+  sections=tags
+  section_permalink=tag_permalink
   replace_value=":tag"
   per_section=per_section
 %}

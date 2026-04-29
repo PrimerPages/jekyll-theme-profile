@@ -9,8 +9,8 @@ title: Category
 {%- assign per_section = page.per_section | default: page.pagination.per_page %}
 
 {% include post-gallery.html
-    collection=categories
-    collection_permalink=category_permalink
+    sections=categories
+    section_permalink=category_permalink
     replace_value=":cat"
     per_section=per_section
 %}

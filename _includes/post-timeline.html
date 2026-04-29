@@ -1,26 +1,31 @@
 {%- comment -%}
 post-timeline.html
 Usage example:
-{% include post-timeline.html collection=site.posts limit=5 index='/blog/index.html' %}
+{% include post-timeline.html posts=site.posts limit=5 index='/blog/index.html' %}
 
 Expects:
-collection (array, required) - A list of posts or other objects to display.
+posts (array, required) - A list of posts or other objects to display.
 limit (integer, optional) - Number of posts to display (default: all).
 index (string, optional) - Index page for the collection.
 {%- endcomment -%}
 
-{%- assign timeline_collection = include.collection | sort: "date" | reverse %}
-{%- assign timeline_post_limit = include.limit | default: -1 %}
-{%- if timeline_post_limit < 0 %}{%- assign timeline_post_limit=collection.size %}{%- endif %}
-{% assign timeline_index=include.index %}
+{%- assign timeline_posts = include.posts | default: nil %}
+{%- if timeline_posts %}
+{%- assign timeline_posts = timeline_posts | sort: "date" | reverse %}
+{%- endif %}
+{%- assign timeline_post_limit = include.limit | default: page.posts_limit | default: site.paginate | default: -1 %}
+{%- if timeline_posts and timeline_post_limit < 0 %}{%- assign timeline_post_limit = timeline_posts.size %}{%- endif %}
+{% assign timeline_index = include.index | default: page.first_page_path %}
+{%- if timeline_posts and timeline_posts.size > 0 %}
 <div class="mx-auto mb-8">
-  {%- for post in timeline_collection | limit: timeline_post_limit %}
+  {%- for post in timeline_posts | limit: timeline_post_limit %}
   {%- include post-timeline-card.html post=post %}
   {%- endfor %}
-  {%- if timeline_collection.size > timeline_post_limit and timeline_index != blank %}
+  {%- if timeline_posts.size > timeline_post_limit and timeline_index != blank %}
   <div class="mx-auto py-3">
     <a href="{{ timeline_index | relative_url }}"
       class="Link--primary arrow-target-mktg text-semibold btn width-full text-center">More</a>
   </div>
   {%- endif %}
   </div>
+{%- endif %}
