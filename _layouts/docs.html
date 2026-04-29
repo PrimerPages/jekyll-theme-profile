@@ -37,8 +37,12 @@ Set display info
 Set edit url
 ===================================
 {% endcomment %}
-{%- assign github_edit_url = "https://www.github.com/" | append: site.repository | append: "/blob/main" %}
+{%- assign github_edit_url = nil %}
+{%- if site.repository %}
+{%- assign github_edit_url = "https://www.github.com/" | append: site.repository | append: "/edit/main" %}
+{%- endif %}
 {%- assign edit_url = page.edit_url | default: site.edit_url | default: github_edit_url %}
+{%- assign show_edit_url = page.show_edit_url | default: site.show_edit_url | default: true %}
 <div class="d-xl-flex">
     <div class="Layout bgColor-default border-right d-none d-xl-block">
         <div class="Layout-sidebar position-sticky"
@@ -128,7 +132,7 @@ Set edit url
                 </div>
 
                 <!-- Edit link -->
-                {% if edit_url %}
+                {% if show_edit_url and edit_url %}
                 <div class="doc-footer border-top my-8 py-5">
                     <a href="{{ edit_url }}/{{ page.path }}">
                         <span class="octicon octicon-pencil-16"></span>
