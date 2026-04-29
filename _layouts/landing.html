@@ -3,6 +3,9 @@ layout: default
 style: none
 ---
 {%- assign style = page.style | default: layout.style | default: site.style %}
+{%- assign repo_info = page.repo_info | default: site.repo_info | default: false %}
+{%- assign nav = page.nav | default: site.nav | default: false %}
+{%- assign social_media = page.social_media | default: site.social_media | default: false %}
 <div class="Header d-flex p-0 flex-1">
     <div class="container-lg flex-column position-sticky top-0">
         <div class="d-flex flex-row py-3 flex-justify-end">
@@ -14,18 +17,18 @@ style: none
             <div class="px-5 py-2 height-full">
                 {%- include masthead.html %}
             </div>
-            {%- if site.repo_info and site.repository %}
+            {%- if repo_info and site.repository %}
             <div class="py-2">
                 {% include mini-repo-info-card.html class="Header-link no-underline" %}
             </div>
             {%- endif %}
             {{ content }}
-            {%- if site.nav %}
+            {%- if nav %}
             <div class="d-flex flex-column">
-                {%- include nav.html %}
+                {%- include nav.html nav=nav %}
             </div>
             {%- endif %}
-            {%- if site.social_media %}
+            {%- if social_media %}
             <div class="py-2 px-2">
                 {%- include social.html %}
             </div>
