@@ -3,4 +3,5 @@
 @import url("https://cdn.jsdelivr.net/npm/octicons-css/octicons.min.css");
 @include meta.load-css("highlight-syntax");
 @include meta.load-css("language-colors");
+@include meta.load-css("admonitions");
 @include meta.load-css("main");
