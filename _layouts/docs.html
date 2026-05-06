@@ -48,8 +48,8 @@ Set edit url
 {%- if site.awesome_nav and site.awesome_nav.enabled and page.awesome_nav %}
   {%- assign awesome_nav_enabled = true %}
 {%- endif %}
-{%- assign awesome_nav_root = site.awesome_nav.root | default: "docs" %}
-{%- assign awesome_nav_root_url = "/" | append: awesome_nav_root | append: "/" %}
+{%- assign awesome_nav_root = site.awesome_nav.root %}
+{%- assign awesome_nav_root_url = awesome_nav_root | append: "/" %}
 {%- assign awesome_nav_index = site.pages | where: "url", awesome_nav_root_url | first %}
 <div class="d-xl-flex">
     <div class="Layout bgColor-default border-right d-none d-xl-block">
