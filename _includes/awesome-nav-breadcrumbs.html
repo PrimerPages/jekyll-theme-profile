@@ -1,0 +1,30 @@
+<div class="Breadcrumb d-flex flex-items-center">
+  <nav aria-label="Breadcrumb" class="f5">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{{ '/' | relative_url }}">home</a>
+      </li>
+      {% if page.breadcrumbs and page.breadcrumbs.size > 0 %}
+        {% for crumb in page.breadcrumbs %}
+          {% if forloop.last %}
+            <li class="breadcrumb-item breadcrumb-item-selected" aria-current="page">
+              {{ crumb.title }}
+            </li>
+          {% elsif crumb.url %}
+            <li class="breadcrumb-item">
+              <a href="{{ crumb.url | relative_url }}">{{ crumb.title }}</a>
+            </li>
+          {% else %}
+            <li class="breadcrumb-item">
+              {{ crumb.title }}
+            </li>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <li class="breadcrumb-item breadcrumb-item-selected" aria-current="page">
+          {{ page.title }}
+        </li>
+      {% endif %}
+    </ol>
+  </nav>
+</div>

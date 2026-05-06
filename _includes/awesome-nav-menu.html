@@ -1,0 +1,68 @@
+{%- comment -%}
+  awesome-nav-menu.html
+
+  Mobile dropdown menu for awesome_nav-powered docs navigation.
+
+  Parameters:
+    - nav: Navigation items to render.
+    - name: Display name for the menu header.
+    - index_url: Optional URL for the docs root page.
+    - id (default: "awesome-nav-menu"): HTML ID for the menu container.
+{%- endcomment -%}
+
+{%- assign nav_items = include.nav | default: page.awesome_nav %}
+{%- assign menu_name = include.name | default: "Documentation" %}
+{%- assign menu_index_url = include.index_url %}
+{%- assign menu_id = include.id | default: "awesome-nav-menu" %}
+
+<script>
+    $(document).ready(function () {
+        const $menu = $("#{{ menu_id }}");
+        const $closeButton = $menu.find(".close-menu");
+
+        if ($menu.length && $closeButton.length) {
+            $closeButton.click(() => $menu.removeAttr("open"));
+        }
+    });
+</script>
+
+<details class="details-reset details-overlay" id="{{ menu_id }}">
+    <summary class="btn btn-invisible" aria-haspopup="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+    </summary>
+    <div class="awesome-nav-menu-drawer position-fixed top-0 left-0 right-0 bottom-0">
+        <button class="awesome-nav-menu-backdrop close-menu position-fixed top-0 left-0 right-0 bottom-0 color-bg-backdrop border-0 p-0 m-0"
+            type="button" aria-label="Close navigation menu"></button>
+        <div class="awesome-nav-menu-panel position-fixed top-0 left-0 bottom-0 color-bg-default border-right d-flex flex-column">
+            <div class="d-flex flex-justify-between flex-items-center p-3 border-bottom">
+                <div tabindex="-1" class="SelectMenu-title">
+                    {%- if menu_index_url %}
+                    <a href="{{ menu_index_url | relative_url }}"
+                        class="AppHeader-link d-flex flex-items-center no-underline mr-3">
+                        <span class="h3 color-fg-default text-bold">{{ menu_name }}</span>
+                    </a>
+                    {%- else %}
+                    <div class="AppHeader-link d-flex flex-items-center no-underline mr-3">
+                        <span class="h3 color-fg-default text-bold">{{ menu_name }}</span>
+                    </div>
+                    {%- endif %}
+                </div>
+                <button class="SelectMenu-closeButton close-menu" type="button">
+                    <span class="octicon octicon-x-16"></span>
+                </button>
+            </div>
+            <div class="SideNav color-bg-default flex-1 overflow-y-auto pl-1">
+                {%- if menu_index_url %}
+                <a href="{{ menu_index_url | relative_url }}" class="SideNav-item border-0" role="menuitem">
+                    {{ menu_name }}
+                </a>
+                {%- else %}
+                <div class="SideNav-item no-underline h4 border-0">{{ menu_name }}</div>
+                {%- endif %}
+                {% include awesome-nav-menu-tree.html items=nav_items %}
+            </div>
+        </div>
+    </div>
+</details>

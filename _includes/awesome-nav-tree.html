@@ -1,0 +1,65 @@
+{% for nav_item in include.items %}
+{% assign item_url = nav_item.url | default: "" %}
+{% assign has_children = nav_item.children and nav_item.children.size > 0 %}
+{% assign is_expanded = false %}
+
+{% if page.breadcrumbs %}
+  {% if item_url != "" %}
+    {% assign breadcrumb_item = page.breadcrumbs | where: "url", item_url | first %}
+    {% if breadcrumb_item %}
+    {% assign is_expanded = true %}
+    {% endif %}
+    {% else %}
+    {% assign breadcrumb_item = page.breadcrumbs | where: "title", nav_item.title | first %}
+    {% if breadcrumb_item %}
+    {% assign is_expanded = true %}
+    {% endif %}
+  {% endif %}
+{% endif %}
+
+{% if has_children %}
+<li class="list-style-none">
+  <details class="details-reset" {% if is_expanded %}open{% endif %}>
+    <summary class="list-style-none color-fg-default">
+      {% if item_url != "" %}
+      <a href="{{ item_url | relative_url }}" class="ActionListItem-label no-underline">
+        <div class="menu-item ActionList-item border-0 d-flex flex-items-center flex-justify-between" {% if page.url == item_url %}aria-current="page"{% endif %}>
+          <span>{{ nav_item.title }}</span>
+          <span class="awesome-nav-chevron color-fg-muted d-flex flex-items-center" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M12.78 6.22a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L3.22 7.28a.75.75 0 1 1 1.06-1.06L8 9.94l3.72-3.72a.75.75 0 0 1 1.06 0Z"></path>
+            </svg>
+          </span>
+        </div>
+      </a>
+      {% else %}
+      <div class="menu-item ActionList-item border-0 d-flex flex-items-center flex-justify-between">
+          <span>{{ nav_item.title }}</span>
+          <span class="awesome-nav-chevron color-fg-muted d-flex flex-items-center" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M12.78 6.22a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L3.22 7.28a.75.75 0 1 1 1.06-1.06L8 9.94l3.72-3.72a.75.75 0 0 1 1.06 0Z"></path>
+            </svg>
+          </span>
+      </div>
+      {% endif %}
+    </summary>
+    <ul class="ml-3">
+      {% assign next_level = include.level | default: 0 | plus: 1 %}
+      {% include awesome-nav-tree.html items=nav_item.children level=next_level %}
+    </ul>
+  </details>
+</li>
+{% elsif item_url != "" %}
+<li class="list-style-none">
+  <a href="{{ item_url | relative_url }}" class="ActionListItem-label no-underline">
+    <div class="menu-item ActionList-item border-0" {% if page.url == item_url %}aria-current="page"{% endif %}>
+      {{ nav_item.title }}
+    </div>
+  </a>
+</li>
+{% else %}
+<li class="menu-item ActionList-item border-0 color-fg-default">
+  {{ nav_item.title }}
+</li>
+{% endif %}
+{% endfor %}

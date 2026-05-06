@@ -1,0 +1,23 @@
+{% assign categories = include.categories | default: doc_categories %}
+{% assign current_page_url = include.current_page_url | default: page.url %}
+{% assign excluded_url = include.excluded_url | default: category_page.url %}
+{% assign default_category_name = include.default_category | default: "" %}
+
+<ul data-overflow-nav class="menu ActionList border-0 ml-3">
+  {%- for category in categories %}
+  {%- assign category_name = category.name | default: default_category_name %}
+  <li class="h4">{{ category_name | capitalize }}
+    <ul>
+      {%- for nav_item in category.items %}
+      {% unless nav_item.url == excluded_url %}
+      <a href="{{ nav_item.url | relative_url }}" class="ActionListItem-label no-underline">
+        <li class="menu-item ActionList-item border-0" {% if current_page_url == nav_item.url %}aria-current="page"{% endif %}>
+          {{ nav_item.title }}
+        </li>
+      </a>
+      {% endunless %}
+      {%- endfor %}
+    </ul>
+  </li>
+  {%- endfor %}
+</ul>

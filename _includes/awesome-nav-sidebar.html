@@ -1,0 +1,7 @@
+{% assign nav_items = include.nav | default: page.awesome_nav %}
+{% assign nav_title = include.title | default: include.name | default: page.docs_name | default: "Documentation" %}
+{% if nav_items and nav_items.size > 0 %}
+<ul data-overflow-nav class="menu ActionList border-0 ml-3">
+  {% include awesome-nav-tree.html items=nav_items level=0 %}
+</ul>
+{% endif %}

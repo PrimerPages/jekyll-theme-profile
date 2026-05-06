@@ -1,6 +1,7 @@
 :root {
   --topbar-height: 150px;
 }
+
 // Needed for setting the background overlay
 body::before {
   content: "";
@@ -17,6 +18,7 @@ body::before {
 .topbar-aware-height {
   height: calc(100vh - var(--topbar-height, 150px));
 }
+
 .topbar-aware-top {
   top: var(--topbar-height, 150px);
 }
@@ -186,6 +188,33 @@ body::before {
 
 .Header-link[aria-current]:not([aria-current=false]) {
   color: var(--underlineNav-borderColor-active, var(--color-primer-border-active));
+}
+
+.awesome-nav-chevron {
+  transition: transform 0.2s ease;
+}
+
+details[open]>summary .awesome-nav-chevron {
+  transform: rotate(180deg);
+}
+
+.awesome-nav-menu-backdrop {
+  opacity: 0.6;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.awesome-nav-menu-drawer {
+  z-index: 100;
+}
+
+.awesome-nav-menu-panel {
+  width: min(100vw, 22rem);
+  z-index: 110;
+}
+
+summary::-webkit-details-marker {
+  display: none;
 }
 
 @media print {

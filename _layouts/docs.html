@@ -12,6 +12,7 @@ Get the collection
 ===================================
 {% endcomment %}
 {%- assign collection_name = page.collection %}
+{%- assign docs_name = page.docs_name | default: page.collection_name | default: "Documentation" %}
 {%- assign docs = site[collection_name]%}
 {%- assign default_collection_index = site.baseurl | append: "/" | append: page.collection | append: "/index.html" %}
 {%- assign collection_index = page.index | default: default_collection_index %}
@@ -43,15 +44,38 @@ Set edit url
 {%- endif %}
 {%- assign edit_url = page.edit_url | default: site.edit_url | default: github_edit_url %}
 {%- assign show_edit_url = page.show_edit_url | default: site.show_edit_url | default: true %}
+{%- assign awesome_nav_enabled = false %}
+{%- if site.awesome_nav and site.awesome_nav.enabled and page.awesome_nav %}
+  {%- assign awesome_nav_enabled = true %}
+{%- endif %}
+{%- assign awesome_nav_root = site.awesome_nav.root | default: "docs" %}
+{%- assign awesome_nav_root_url = "/" | append: awesome_nav_root | append: "/" %}
+{%- assign awesome_nav_index = site.pages | where: "url", awesome_nav_root_url | first %}
 <div class="d-xl-flex">
     <div class="Layout bgColor-default border-right d-none d-xl-block">
         <div class="Layout-sidebar position-sticky"
             style="top: var(--topbar-height, 150px); height: calc(100vh - var(--topbar-height, 150px));"
             >
             <nav>
-                {% if collection_page %}
                 {%- assign c_height = 38 %}{% comment %}The height of the collection link {% endcomment %}
                 {%- assign s_height = 55 %}{% comment %} The height of the section header {% endcomment %}
+                {% if awesome_nav_enabled %}
+                <div class="d-none px-4 pb-3 border-bottom d-xl-block"
+                    style="height: calc({{c_height}}px + {{s_height}}px);">
+                    <div class="pt-3">
+                        <a class="f6 pl-2 pr-5 ml-n1 pb-1 color-fg-default"
+                            href="{{ awesome_nav_root_url | relative_url }}">
+                            <span class="octicon octicon-arrow-left-16 mr-1"></span>
+                            {{ docs_name }}
+                        </a>
+                    </div>
+                    <h2 class="pt-3">
+                        <div class="d-block pl-1 mb-2 h3 color-fg-default no-underline">
+                            {{ awesome_nav_index.title | default: "Docs" }}
+                        </div>
+                    </h2>
+                </div>
+                {% elsif collection_page %}
                 <div class="d-none px-4 pb-3 border-bottom d-xl-block"
                     style="height: calc({{c_height}}px + {{s_height}}px);">
                     <div class="pt-3">
@@ -59,7 +83,7 @@ Set edit url
                         <a class="f6 pl-2 pr-5 ml-n1 pb-1 color-fg-default"
                             href="{{ collection_page.url | relative_url }}">
                             <span class="octicon octicon-arrow-left-16 mr-1"></span>
-                            {{ collection_name | capitalize }}
+                            {{ docs_name }}
                         </a>
                         
                     </div>
@@ -73,25 +97,11 @@ Set edit url
                 <div class="d-none d-xl-block bg-primary overflow-y-auto flex-shrink-0 pb-3"
                     style="height: calc(100vh - var(--topbar-height, 150px) - {{c_height}}px - {{s_height}}px);">
                     <div class="pt-3">
-                        <ul data-overflow-nav class="menu ActionList border-0 ml-3">
-                            {%- for category in doc_categories %}
-                            {%- assign category_name = category.name | default: default_category %}
-                            <li class="h4">{{ category_name | capitalize }}
-                                <ul>
-                                    {%- for nav_item in category.items %}
-                                    {% unless nav_item.url == category_page.url %}
-                                    <a href="{{ nav_item.url | relative_url }}" class="ActionListItem-label no-underline">
-                                        <li class="menu-item ActionList-item border-0" {% if page.url==nav_item.url %}
-                                            aria-current="page" {% endif %}>
-                                            {{ nav_item.title }}
-                                        </li>
-                                    </a>
-                                    {% endunless %}
-                                    {%- endfor %}
-                                </ul>
-                            </li>
-                            {%- endfor %}
-                        </ul>
+                        {% if awesome_nav_enabled %}
+                        {% include awesome-nav-sidebar.html nav=page.awesome_nav %}
+                        {% else %}
+                        {% include collection-sidebar.html categories=doc_categories current_page_url=page.url excluded_url=category_page.url default_category=default_category %}
+                        {% endif %}
                     </div>
                 </div>
             </nav>
@@ -100,9 +110,17 @@ Set edit url
     <div class="container-xl flex-1  p-responsive pb-6">
         <div class="py-4 d-flex">
             <div class="d-xl-none">
-                {% include collection-menu.html collection=docs name=collection_name index=collection_page %}
+                {% if awesome_nav_enabled %}
+                {% include awesome-nav-menu.html nav=page.awesome_nav name=docs_name index_url=awesome_nav_root_url %}
+                {% else %}
+                {% include collection-menu.html collection=docs name=docs_name index=collection_page %}
+                {% endif %}
             </div>
+            {% if awesome_nav_enabled %}
+            {% include awesome-nav-breadcrumbs.html %}
+            {% else %}
             {% include breadcrumbs.html %}
+            {% endif %}
         </div>
         <div class="pb-5 p-responsive">
             <h1 class="border-bottom-0">{{ page.title }}</h1>
@@ -115,6 +133,21 @@ Set edit url
                 <!-- Pagination links -->
                 <div class="paginate-container py-3">
                     <div role="navigation" aria-label="Pagination" class="d-inline-block pagination">
+                        {% if awesome_nav_enabled %}
+                        {% if page.awesome_nav_previous %}
+                        <a class="previous_page" rel="prev" href="{{ page.awesome_nav_previous.url | relative_url }}"
+                            aria-disabled="false">{{ page.awesome_nav_previous.title | truncate: 20 }}</a>
+                        {% else %}
+                        <span class="previous_page disabled" aria-disabled="true">Previous</span>
+                        {% endif %}
+
+                        {% if page.awesome_nav_next %}
+                        <a class="next_page" rel="next" href="{{ page.awesome_nav_next.url | relative_url }}"
+                            aria-disabled="false">{{ page.awesome_nav_next.title | truncate: 20 }}</a>
+                        {% else %}
+                        <span class="next_page disabled" aria-disabled="true">Next</span>
+                        {% endif %}
+                        {% else %}
                         {% if page.previous.url %}
                         <a class="previous_page" rel="prev" href="{{ page.previous.url | relative_url }}"
                             aria-disabled="false">{{page.previous.title | truncate: 20 }}</a>
@@ -127,6 +160,7 @@ Set edit url
                             aria-disabled="false">{{page.next.title | truncate: 20 }}</a>
                         {% else %}
                         <span class="next_page disabled" aria-disabled="true">Next</span>
+                        {% endif %}
                         {% endif %}
                     </div>
                 </div>

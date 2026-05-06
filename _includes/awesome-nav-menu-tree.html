@@ -1,0 +1,20 @@
+{% for nav_item in include.items %}
+{% assign item_url = nav_item.url | default: "" %}
+{% assign has_children = nav_item.children and nav_item.children.size > 0 %}
+
+{% if item_url != "" %}
+<a href="{{ item_url | relative_url }}" class="menu-item border-0" role="menuitem" {% if page.url == item_url %}aria-current="page"{% endif %}>
+  {{ nav_item.title }}
+</a>
+{% else %}
+<div class="menu-item color-fg-muted border-0">
+  {{ nav_item.title }}
+</div>
+{% endif %}
+
+{% if has_children %}
+<div class="ml-3">
+  {% include awesome-nav-menu-tree.html items=nav_item.children %}
+</div>
+{% endif %}
+{% endfor %}
