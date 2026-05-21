@@ -40,7 +40,7 @@ profile_link: true # Show a link to the github profile for the user
 #   enabled: true
 #   config: /versions.json
 #   prefix: ""
-#   # config is resolved with the current baseurl; prefix is emitted exactly as configured here
+#   # config and prefix are emitted exactly as configured here
 #   # versioning is enabled only when this block is present, or when enabled is explicitly true
 #   show_warning: true
 #   warning_title: Non-default version
