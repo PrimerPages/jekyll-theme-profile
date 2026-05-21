@@ -1,21 +1,8 @@
 {% for nav_item in include.items %}
 {% assign item_url = nav_item.url | default: "" %}
 {% assign has_children = nav_item.children and nav_item.children.size > 0 %}
-{% assign is_expanded = false %}
-
-{% if page.breadcrumbs %}
-  {% if item_url != "" %}
-    {% assign breadcrumb_item = page.breadcrumbs | where: "url", item_url | first %}
-    {% if breadcrumb_item %}
-    {% assign is_expanded = true %}
-    {% endif %}
-    {% else %}
-    {% assign breadcrumb_item = page.breadcrumbs | where: "title", nav_item.title | first %}
-    {% if breadcrumb_item %}
-    {% assign is_expanded = true %}
-    {% endif %}
-  {% endif %}
-{% endif %}
+{% assign is_expanded = nav_item.contains_current | default: false %}
+{% assign is_current = nav_item.current | default: false %}
 
 {% if has_children %}
 <li class="list-style-none">
@@ -23,7 +10,7 @@
     <summary class="list-style-none color-fg-default">
       {% if item_url != "" %}
       <a href="{{ item_url | relative_url }}" class="ActionListItem-label no-underline">
-        <div class="menu-item ActionList-item border-0 d-flex flex-items-center flex-justify-between" {% if page.url == item_url %}aria-current="page"{% endif %}>
+        <div class="menu-item ActionList-item border-0 d-flex flex-items-center flex-justify-between" {% if is_current %}aria-current="page"{% endif %}>
           <span>{{ nav_item.title }}</span>
           <span class="awesome-nav-chevron color-fg-muted d-flex flex-items-center" aria-hidden="true">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -52,7 +39,7 @@
 {% elsif item_url != "" %}
 <li class="list-style-none">
   <a href="{{ item_url | relative_url }}" class="ActionListItem-label no-underline">
-    <div class="menu-item ActionList-item border-0" {% if page.url == item_url %}aria-current="page"{% endif %}>
+    <div class="menu-item ActionList-item border-0" {% if is_current %}aria-current="page"{% endif %}>
       {{ nav_item.title }}
     </div>
   </a>

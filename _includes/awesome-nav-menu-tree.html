@@ -1,9 +1,10 @@
 {% for nav_item in include.items %}
 {% assign item_url = nav_item.url | default: "" %}
 {% assign has_children = nav_item.children and nav_item.children.size > 0 %}
+{% assign is_current = nav_item.current | default: false %}
 
 {% if item_url != "" %}
-<a href="{{ item_url | relative_url }}" class="menu-item border-0" role="menuitem" {% if page.url == item_url %}aria-current="page"{% endif %}>
+<a href="{{ item_url | relative_url }}" class="menu-item border-0" role="menuitem" {% if is_current %}aria-current="page"{% endif %}>
   {{ nav_item.title }}
 </a>
 {% else %}
