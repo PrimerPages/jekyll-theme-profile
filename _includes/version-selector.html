@@ -1,0 +1,22 @@
+{%- assign unavailable_label = site.versions.unavailable_label | default: "Version info unavailable" -%}
+<details class="version-selector details-reset details-overlay d-none" data-version-selector
+    data-version-unavailable-label="{{ unavailable_label }}">
+    <summary class="version-selector__trigger d-flex flex-items-center text-nowrap" aria-haspopup="true">
+        <span class="f6" data-version-current-label></span>
+        <span class="octicon octicon-chevron-down-16 ml-1"></span>
+    </summary>
+    <details-menu class="SelectMenu" role="menu">
+        <div class="SelectMenu-modal">
+            <div class="SelectMenu-header">
+                <div tabindex="-1" class="SelectMenu-title">Versions</div>
+            </div>
+            <div class="SelectMenu-list" data-version-options>
+                <div class="SelectMenu-item color-fg-muted" data-version-loading>Loading versions...</div>
+            </div>
+            <div class="SelectMenu-footer">
+                <div class="ActionList-sectionDivider mt-0 mb-1"></div>
+                <div class="color-fg-muted f6" data-version-status></div>
+            </div>
+        </div>
+    </details-menu>
+</details>

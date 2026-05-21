@@ -1,0 +1,15 @@
+{%- assign show_version_warning = site.versions.show_warning | default: false -%}
+{%- assign version_warning_title = site.versions.warning_title | default: "Non-default version" -%}
+{%- assign version_warning_message = site.versions.warning_message | default: "You are viewing a non-default version of these docs." -%}
+{%- if show_version_warning != false -%}
+<div class="d-none mb-4" data-version-warning aria-live="polite"
+    data-version-warning-message="{{ version_warning_message | escape }}">
+    <div class="border rounded-2 color-bg-subtle p-3 d-flex flex-items-start">
+        <span class="octicon octicon-alert-16 mr-2 mt-1 color-fg-attention"></span>
+        <div class="f6 color-fg-default">
+            <strong class="d-block mb-1">{{ version_warning_title }}</strong>
+            <span data-version-warning-text>{{ version_warning_message }}</span>
+        </div>
+    </div>
+</div>
+{%- endif -%}

@@ -34,6 +34,18 @@ repo_info: true # Show the information for the source of this project
 user_metadata: true # Show the metadata associated with the user
 profile_link: true # Show a link to the github profile for the user
 
+####################
+# Versioned docs settings
+# versions:
+#   enabled: true
+#   config: /versions.json
+#   prefix: ""
+#   # enabled defaults to true when a config path is set or when /versions.json exists; set false to disable
+#   show_warning: true
+#   warning_title: Non-default version
+#   warning_message: You are viewing a non-default version of these docs.
+#   unavailable_label: Version info unavailable
+
 ##########################
 # # Social media settings
 # icon_color: "#959da5" # The color of the social media icons on the site

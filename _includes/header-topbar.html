@@ -17,7 +17,12 @@
                     <span class="octicon octicon-mark-github-24"></span>
                 </a>
             </div>
-            <a href="{{ site.baseurl }}/" class="Header-item Header-link Header-item--full">{{ name }}</a>
+            <div class="Header-item Header-link Header-item--full">
+            <a href="{{ site.baseurl }}/">{{ name }}</a>
+            <div class="d-inline-block ml-4">
+            {% include version-selector.html %}
+            </div>
+            </div>
             <div class="Header-item">
             {% include toggle.html %}
             </div>

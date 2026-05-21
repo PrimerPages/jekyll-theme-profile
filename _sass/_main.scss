@@ -160,6 +160,24 @@ body::before {
   color: var(--fgColor-default, var(--color-fg-default));
 }
 
+.version-selector__trigger {
+  color: var(--fgColor-default, var(--color-fg-default));
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.version-selector__trigger:hover {
+  text-decoration: none;
+}
+
+.AppHeader .version-selector__trigger {
+  color: var(--fgColor-default, var(--color-fg-default));
+}
+
+.Header .version-selector__trigger {
+  color: var(--header-fgColor-default, var(--color-header-text));
+}
+
 .ActionListItem {
   background-color: var(--control-transparent-bgColor-rest, #0000);
   border-radius: var(--borderRadius-medium, 0.375rem);

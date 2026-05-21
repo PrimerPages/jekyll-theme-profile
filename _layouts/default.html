@@ -1,8 +1,9 @@
 {%- assign style = page.style | default: layout.style | default: site.style | default: "appbar" %}
 {%- assign light_theme = site.light_theme | default: "light" %}
 {%- assign dark_theme = site.dark_theme | default: "dark" %}
+{%- include resolve-versioning.html %}
 <!doctype html>
-<html lang="en" data-color-mode="auto" data-light-theme="{{ light_theme }}" data-dark-theme="{{ dark_theme }}">
+<html lang="en" data-color-mode="auto" data-light-theme="{{ light_theme }}" data-dark-theme="{{ dark_theme }}" data-baseurl="{{ site.baseurl }}" data-versioning-enabled="{{ versions_enabled }}"{% if versions_enabled %} data-versions-json="{{ versions_json }}" data-versioning-prefix="{{ versions_prefix }}"{% endif %}>
 
 {%- include head.html %}
 

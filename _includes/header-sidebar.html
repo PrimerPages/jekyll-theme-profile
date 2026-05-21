@@ -36,6 +36,9 @@
                 <div class="px-5 py-2">
                     {%- include masthead.html size="128px" %}
                 </div>
+                <div class="d-flex flex-justify-center ml-2">
+                {% include version-selector.html %}
+                </div>
                 {%- if site.repo_info and site.repository %}
                 <div class="py-2">
                     {% include mini-repo-info-card.html class="Header-link no-underline" %}

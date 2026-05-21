@@ -14,6 +14,9 @@
                 <span class="octicon octicon-mark-github-24"></span>
                 <span class="h4 text-semibold mx-3">{{ name }}</span>
             </a>
+            <span class="d-none d-sm-block flex-content-center ml-2">
+            {% include version-selector.html %}
+            </span>
         </div>
         <div class="AppHeader-item d-flex flex-items-center">
             {% include toggle.html %}

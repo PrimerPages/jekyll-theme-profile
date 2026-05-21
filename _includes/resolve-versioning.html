@@ -1,0 +1,27 @@
+{%- assign versions_json_config = site.versions.config | default: "/versions.json" -%}
+{%- assign versions_prefix = site.versions.prefix | default: "" -%}
+{%- assign versions_json_config_first_char = versions_json_config | slice: 0, 1 -%}
+{%- unless versions_json_config_first_char == "/" -%}
+{%- assign versions_json_config = "/" | append: versions_json_config -%}
+{%- endunless -%}
+{%- assign versions_prefix_first_char = versions_prefix | slice: 0, 1 -%}
+{%- unless versions_prefix == "" or versions_prefix_first_char == "/" -%}
+{%- assign versions_prefix = "/" | append: versions_prefix -%}
+{%- endunless -%}
+{%- assign versions_enabled = false -%}
+{%- assign versions_static_file = site.static_files | where: "path", versions_json_config | first -%}
+{%- if site.versions and site.versions != empty -%}
+{%- assign versions_enabled = true -%}
+{%- elsif versions_static_file -%}
+{%- assign versions_enabled = true -%}
+{%- endif -%}
+{%- if site.versions and site.versions.enabled != nil -%}
+{%- assign versions_enabled = site.versions.enabled -%}
+{%- endif -%}
+{%- if page.versions and page.versions.enabled != nil -%}
+{%- assign versions_enabled = page.versions.enabled -%}
+{%- endif -%}
+{%- assign versions_json = "" -%}
+{%- if versions_enabled -%}
+{%- assign versions_json = versions_json_config -%}
+{%- endif -%}
