@@ -4,19 +4,8 @@
 {% assign contains_current = nav_item.contains_current | default: false %}
 {% assign has_children = nav_item.children and nav_item.children.size > 0 %}
 {% assign skip_item = false %}
-{% assign breadcrumb_url = item_url %}
 
-{% if breadcrumb_url == "" and has_children %}
-  {% for child in nav_item.children %}
-    {% assign child_url = child.url | default: "" %}
-    {% if child_url != "" %}
-      {% assign breadcrumb_url = child_url %}
-      {% break %}
-    {% endif %}
-  {% endfor %}
-{% endif %}
-
-{% if include.root_url and breadcrumb_url != "" and breadcrumb_url == include.root_url %}
+{% if include.root_url and item_url != "" and item_url == include.root_url %}
   {% assign skip_item = true %}
 {% endif %}
 
@@ -26,9 +15,9 @@
       <li class="breadcrumb-item breadcrumb-item-selected" aria-current="page">
         {{ nav_item.title }}
       </li>
-    {% elsif breadcrumb_url != "" %}
+    {% elsif item_url != "" %}
       <li class="breadcrumb-item">
-        <a href="{{ breadcrumb_url | relative_url }}">{{ nav_item.title }}</a>
+        <a href="{{ item_url | relative_url }}">{{ nav_item.title }}</a>
       </li>
     {% else %}
       <li class="breadcrumb-item">
