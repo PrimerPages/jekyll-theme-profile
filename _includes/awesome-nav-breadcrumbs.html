@@ -1,8 +1,32 @@
 <div class="Breadcrumb d-flex flex-items-center">
   <nav aria-label="Breadcrumb" class="f5">
     <ol class="breadcrumb">
+      {% assign root_crumb = nil %}
       {% if page.breadcrumbs and page.breadcrumbs.size > 0 %}
+        {% assign root_crumb = page.breadcrumbs.first %}
+      {% endif %}
+
+      {% if root_crumb %}
+        <li class="breadcrumb-item">
+          <a href="{{ root_crumb.url | relative_url }}">{{ root_crumb.title }}</a>
+        </li>
+      {% endif %}
+
+      {% capture awesome_nav_trail %}
+        {% if page.awesome_nav and page.awesome_nav.size > 0 %}
+          {% include awesome-nav-breadcrumb-trail.html items=page.awesome_nav root_url=root_crumb.url %}
+        {% endif %}
+      {% endcapture %}
+
+      {% assign awesome_nav_trail = awesome_nav_trail | strip %}
+
+      {% if awesome_nav_trail != "" %}
+        {{ awesome_nav_trail }}
+      {% elsif page.breadcrumbs and page.breadcrumbs.size > 0 %}
         {% for crumb in page.breadcrumbs %}
+          {% if forloop.first %}
+          {% continue %}
+          {% endif %}
           {% if forloop.last %}
             <li class="breadcrumb-item breadcrumb-item-selected" aria-current="page">
               {{ crumb.title }}
