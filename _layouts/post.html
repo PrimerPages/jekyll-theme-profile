@@ -82,9 +82,14 @@ layout: default
                     </div>
                     <div class="col-12 col-lg-7 col-md-8 markdown-body">
                         {% if page.video %}
-                        <div id="Timeline-video-container" class="image-container mb-5">
-                            <iframe id="Timeline-video" src="{{ page.video }}" frameborder="0" height="inherited"
-                              width="inherited"></iframe>
+                        <div class="image-container mb-5">
+                            <iframe
+                                class="rounded-2"
+                                src="{{ page.video }}"
+                                frameborder="0"
+                                allowfullscreen
+                                title="{{ page.title }}"
+                            ></iframe>
                         </div>
                         {% endif %}
                         {{ content }}

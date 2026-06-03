@@ -49,9 +49,14 @@
   <div class="col-12 col-md-7">
     <div class="pt-md-7 ml-5 border-bottom">
         {%- if post.video %}
-        <div id="Timeline-video-container" class="image-container mb-5">
-          <iframe id="Timeline-video" src="{{ post.video }}" frameborder="0" height="inherited"
-            width="inherited"></iframe>
+        <div class="image-container mb-5">
+          <iframe
+            class="rounded-2"
+            src="{{ post.video }}"
+            frameborder="0"
+            allowfullscreen
+            title="{{ post.title }}"
+          ></iframe>
         </div>
         {%- elsif post.image %}
         <div class="image-container mb-5">
@@ -76,27 +81,4 @@
     </div>
 
   </div>
-  <script>
-    (function () {
-      const card = document.currentScript.closest('.TimelineItem');
-      if (!card) return;
-
-      const videocontainer = card.querySelector('.timeline-video-container');
-      const iframe = card.querySelector('.Timeline-video');
-      const title = card.querySelector('.TimelineItem-title');
-
-      function setIframeDimensions() {
-        if (!videocontainer || !iframe) return;
-        iframe.style.width = container.offsetWidth + 'px';
-        iframe.style.height = container.offsetHeight + 'px';
-      }
-
-      // Initial iframe sizing
-      setIframeDimensions();
-
-      // Watch for container resize
-      new ResizeObserver(setIframeDimensions).observe(card);
-
-    })();
-  </script>
 </div>
