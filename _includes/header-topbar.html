@@ -1,6 +1,8 @@
 {%- assign user = site.github.owner %}
 {%- assign name = site.title | default: user.name | default: user.login %}
 {%- assign user_img = site.user_image | default: user.avatar_url | default: "/assets/img/user-image.jpg" %}
+{%- assign favicon = site.favicon | default: site.logo | default: "/assets/img/favicon.ico" %}
+{%- assign header_icon = site.header_icon | default: "mark-github" %}
 <script>
     $(document).ready(function () {
         $('#expansion-btn').click(function () {
@@ -14,11 +16,17 @@
             <div class="Header-item">
                 <button id="expansion-btn" class="btn-octicon mr-2 d-sm-none"><span class="octicon octicon-three-bars-16"></span></button>
                 <a href="{{ site.baseurl }}/" class="Header-link h1 f4 d-flex flex-items-center">
-                    <span class="octicon octicon-mark-github-24"></span>
+                    {%- unless header_icon == "none" %}
+                      {%- if header_icon == "favicon" %}
+                    <img src="{{ favicon | relative_url }}" alt="" width="24" height="24" class="mr-2" />
+                      {%- else %}
+                    <span class="octicon octicon-{{ header_icon }}-24"></span>
+                      {%- endif %}
+                    {%- endunless %}
                 </a>
             </div>
             <div class="Header-item Header-link Header-item--full">
-            <a href="{{ site.baseurl }}/">{{ name }}</a>
+            <a class="Header-link h3" href="{{ site.baseurl }}/">{{ name }}</a>
             <div class="d-inline-block ml-4">
             {% include version-selector.html %}
             </div>

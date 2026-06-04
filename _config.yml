@@ -26,8 +26,8 @@ defaults:
 style: appbar # One of "stacked", "sidebar", "topbar", "appbar"
 # The user/project avatar.  If not set the avatar of the project owner will be used.
 # user_image: /assets/img/user-image.jpg
-# The appbar brand icon. Use "none", "favicon", or an Octicon name like "mark-github".
-# appbar_icon: favicon
+# The header brand icon. Use "none", "favicon", or an Octicon name like "mark-github".
+# header_icon: favicon
 # The themes to use for dark and light
 dark_theme: dark # One of dark, dark_dimmed, dark_colorblind, dark_high_contrast, dark_tritanopia
 light_theme: light # One of light, light_colorblind, light_high_contrast, light_tritanopia
