@@ -1,9 +1,11 @@
 {%- assign user = site.github.owner %}
 {%- assign name = site.title | default: user.name | default: user.login %}
 {%- assign user_img = site.user_image | default: user.avatar_url | default: "/assets/img/user-image.jpg" %}
+{%- assign favicon = site.favicon | default: site.logo | default: "/assets/img/favicon.ico" %}
+{%- assign appbar_icon = site.appbar_icon | default: "mark-github" %}
 
 <header class="AppHeader position-sticky top-0 z-2 border-bottom topbar">
-    <div class="AppHeader-item d-flex flex-justify-between p-2 flex-items-center">
+    <div class="AppHeader-item d-flex flex-justify-between p-2 flex-items-center mb-2">
         {%- if site.nav %}
         <div class="d-flex d-sm-none">
             {% include nav-overlay.html %}
@@ -11,8 +13,14 @@
         {%- endif %}
         <div tabindex="-1" class="d-flex flex-1 ml-3" id="github-logo">
             <a href="{{ site.baseurl }}/" class="AppHeader-link d-flex flex-items-center no-underline mr-3 h1">
-                <span class="octicon octicon-mark-github-24"></span>
-                <span class="h4 text-semibold mx-3">{{ name }}</span>
+                {%- unless appbar_icon == "none" %}
+                  {%- if appbar_icon == "favicon" %}
+                <img src="{{ favicon | relative_url }}" alt="" width="24" height="24" class="mr-2" />
+                  {%- else %}
+                <span class="octicon octicon-{{ appbar_icon }}-24"></span>
+                  {%- endif %}
+                {%- endunless %}
+                <span class="h4 text-semibold{% unless appbar_icon == "none" %} mx-3{% endunless %}">{{ name }}</span>
             </a>
             <span class="d-none d-sm-block flex-content-center ml-2">
             {% include version-selector.html %}
@@ -35,11 +43,11 @@
             {%- endif %}
         </div>
     </div>
-    {%- if site.nav %}
-    <div class="d-flex flex-items-center mt-2">
+    <div class="d-flex flex-items-center">
+        {%- if site.nav %}
         <div class="AppHeader-item width-full hide-sm">
             {%- include navbar-underline.html %}
         </div>
+        {%- endif %}
     </div>
-    {%- endif %}
 </header>
