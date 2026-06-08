@@ -82,6 +82,10 @@ jobs:
     steps:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1.310.0
+        with:
+          ruby-version: 3.3
+          bundler-cache: true
+
 
       - name: Download built gem artifact
         uses: actions/download-artifact@v8.0.1
