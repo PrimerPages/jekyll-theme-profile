@@ -1,0 +1,174 @@
+name: Release gem
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version to publish or test (for example, 1.13.0)"
+        required: true
+        type: string
+      dry-run:
+        description: "Build and validate without publishing"
+        required: false
+        default: true
+        type: boolean
+
+jobs:
+  build-gem:
+    name: Build gem
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      gem-name: ${{ steps.meta.outputs.gem-name }}
+      release-version: ${{ steps.meta.outputs.release-version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.305.0
+
+      - name: Resolve gem metadata
+        id: meta
+        shell: bash
+        env:
+          RELEASE_VERSION: ${{ github.event.release.tag_name || inputs.version }}
+        run: |
+          set -euo pipefail
+
+          GEM_NAME="${GITHUB_REPOSITORY##*/}"
+          VERSION="${RELEASE_VERSION#v}"
+
+          if ! [[ "${VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid version format: ${VERSION}" >&2
+            exit 1
+          fi
+
+          echo "gem-name=${GEM_NAME}" >> "$GITHUB_OUTPUT"
+          echo "release-version=${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Set gemspec version
+        shell: bash
+        run: |
+          set -euo pipefail
+          chmod +x ./build.sh
+          ./build.sh "${{ steps.meta.outputs.release-version }}"
+
+      - name: Upload built gem artifact
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: ${{ steps.meta.outputs.gem-name }}
+          path: ${{ steps.meta.outputs.gem-name }}-${{ steps.meta.outputs.release-version }}.gem
+          if-no-files-found: error
+          retention-days: 7
+
+  publish-gem:
+    name: Publish gem
+    needs: [build-gem]
+    runs-on: ubuntu-latest
+    environment: release-gem
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.305.0
+
+      - name: Download built gem artifact
+        uses: actions/download-artifact@v8.0.1
+        with:
+          name: ${{ needs.build-gem.outputs.gem-name }}
+          path: .
+
+      - name: Check whether gem version is already published
+        id: published
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          GEM_NAME="${{ needs.build-gem.outputs.gem-name }}"
+          VERSION="${{ needs.build-gem.outputs.release-version }}"
+
+          if gem fetch "$GEM_NAME" --version "$VERSION" --clear-sources --source https://rubygems.org >/dev/null 2>&1; then
+            echo "already-published=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "already-published=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Configure RubyGems credentials
+        if: ${{ (github.event_name == 'release' || !inputs.dry-run) && steps.published.outputs.already-published != 'true' }}
+        uses: rubygems/configure-rubygems-credentials@v2.0.0
+
+      - name: Validate gem artifact
+        if: ${{ inputs.dry-run }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gem specification "${{ needs.build-gem.outputs.gem-name }}-${{ needs.build-gem.outputs.release-version }}.gem" name
+
+      - name: Publish gem
+        if: ${{ (github.event_name == 'release' || !inputs.dry-run) && steps.published.outputs.already-published != 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          GEM_NAME="${{ needs.build-gem.outputs.gem-name }}"
+          VERSION="${{ needs.build-gem.outputs.release-version }}"
+          gem push "${{ needs.build-gem.outputs.gem-name }}-${{ needs.build-gem.outputs.release-version }}.gem"
+
+          {
+            echo "## Publish Summary"
+            echo "- Gem: \`${GEM_NAME}\`"
+            echo "- Version: \`${VERSION}\`"
+            echo "- RubyGems status: pushed successfully"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload gem to GitHub release
+        id: upload
+        if: ${{ github.event_name == 'release' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release upload "$RELEASE_TAG" "${{ needs.build-gem.outputs.gem-name }}-${{ needs.build-gem.outputs.release-version }}.gem" --clobber
+          echo "upload-gem-release=true" >> "$GITHUB_OUTPUT"
+
+      - name: Summary
+        shell: bash
+        if: ${{ always() }}
+        run: |
+          GEM_NAME="${{ needs.build-gem.outputs.gem-name }}"
+          VERSION="${{ needs.build-gem.outputs.release-version }}"
+          ALREADY_PUBLISHED="${{ steps.published.outputs.already-published }}"
+          UPLOAD_GEM_RELEASE="${{ steps.upload.outputs.upload-gem-release || 'false' }}"
+
+          {
+            echo "## Publish Summary"
+            echo ''
+            echo "Gem: \`${GEM_NAME}\`"
+            echo "Version: \`${VERSION}\`"
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+
+          if [[ "${ALREADY_PUBLISHED}" == 'true' ]]; then
+            echo "- RubyGems status: already published" | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "- Action: skipped \`gem push\`" | tee -a "$GITHUB_STEP_SUMMARY"
+          elif [[ ${{ inputs.dry-run }} == 'true' ]]; then
+            echo "- RubyGems status: not published" | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "- Action: dry run validation only" | tee -a "$GITHUB_STEP_SUMMARY"
+          else
+            echo "- RubyGems status: pushed successfully" | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "- Action: published to RubyGems" | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
+
+          if [[ "${UPLOAD_GEM_RELEASE}" == 'true' ]]; then
+            echo "- GitHub release asset: uploaded" | tee -a "$GITHUB_STEP_SUMMARY"
+          else
+            echo "- GitHub release asset: skipped" | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
