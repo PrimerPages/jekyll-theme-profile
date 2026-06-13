@@ -144,12 +144,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          gh release upload "$RELEASE_TAG" "${{ needs.build-gem.outputs.gem-name }}-${{ needs.build-gem.outputs.release-version }}.gem" --clobber
+          gh release upload "$RELEASE_TAG" "${{ needs.build-gem.outputs.gem-name }}-${{ needs.build-gem.outputs.release-version }}.gem" --repo "$GITHUB_REPOSITORY" --clobber
           echo "upload-gem-release=true" >> "$GITHUB_OUTPUT"
 
       - name: Summary
         shell: bash
         if: ${{ always() }}
+        env:
+          IS_DRY_RUN: ${{ inputs.dry-run || 'false' }}
         run: |
           GEM_NAME="${{ needs.build-gem.outputs.gem-name }}"
           VERSION="${{ needs.build-gem.outputs.release-version }}"
@@ -166,7 +168,7 @@ jobs:
           if [[ "${ALREADY_PUBLISHED}" == 'true' ]]; then
             echo "- RubyGems status: already published" | tee -a "$GITHUB_STEP_SUMMARY"
             echo "- Action: skipped \`gem push\`" | tee -a "$GITHUB_STEP_SUMMARY"
-          elif [[ ${{ inputs.dry-run }} == 'true' ]]; then
+          elif [[ "${IS_DRY_RUN}" == 'true' ]]; then
             echo "- RubyGems status: not published" | tee -a "$GITHUB_STEP_SUMMARY"
             echo "- Action: dry run validation only" | tee -a "$GITHUB_STEP_SUMMARY"
           else
